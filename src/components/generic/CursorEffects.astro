@@ -1,138 +1,124 @@
 ---
-// Custom Cursor Effects Component
+// Custom Cursor Effects Component with Golden Stardust
 ---
 
-<!-- Cursor Follower Element -->
-<div class="cursor-follower" id="cursorFollower"></div>
-
 <script>
-  // Cursor effects functionality
+  // Golden Stardust Cursor Effects
   function initCursorEffects() {
-    const follower = document.getElementById('cursorFollower');
-    if (!follower) return;
+    let lastX = 0;
+    let lastY = 0;
+    let stardustTimer: number | null = null;
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let followerX = 0;
-    let followerY = 0;
-    const speed = 0.1; // Smoothness of follower
-
-    // Update mouse position
+    // Update mouse position and create stardust
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      const currentX = e.clientX;
+      const currentY = e.clientY;
       
-      // Show follower
-      if (follower) {
-        follower.classList.add('active');
+      // Calculate mouse movement speed
+      const deltaX = currentX - lastX;
+      const deltaY = currentY - lastY;
+      const speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      
+      // Create more stardust when moving faster, but keep it elegant
+      const shouldCreateStardust = Math.random() > 0.7; // Más frecuente pero tenue
+      
+      if (shouldCreateStardust) {
+        createStardust(currentX, currentY);
       }
-
-      // Create trail effect occasionally
-      if (Math.random() > 0.85) {
-        createTrail(e.clientX, e.clientY);
+      
+      // Occasionally create a star sparkle (very subtle)
+      if (Math.random() > 0.95 && speed > 2) {
+        createStar(currentX, currentY);
       }
+      
+      lastX = currentX;
+      lastY = currentY;
     });
 
-    // Smooth follower animation
-    function animate() {
-      // Calculate smooth following
-      const distX = mouseX - followerX;
-      const distY = mouseY - followerY;
-      
-      followerX += distX * speed;
-      followerY += distY * speed;
-      
-      if (follower) {
-        follower.style.left = followerX - 20 + 'px';
-        follower.style.top = followerY - 20 + 'px';
-      }
-      
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    // Click ripple effect
+    // Click effect - Burst of golden stars
     document.addEventListener('click', (e) => {
-      createRipple(e.clientX, e.clientY);
-      createParticles(e.clientX, e.clientY);
+      createGoldenBurst(e.clientX, e.clientY);
     });
 
-    // Create ripple effect
-    function createRipple(x: number, y: number) {
-      const ripple = document.createElement('div');
-      ripple.className = 'cursor-ripple';
-      ripple.style.left = (x - 10) + 'px';
-      ripple.style.top = (y - 10) + 'px';
-      document.body.appendChild(ripple);
+    // Create elegant stardust particle
+    function createStardust(x: number, y: number) {
+      const stardust = document.createElement('div');
+      stardust.className = 'cursor-stardust';
       
-      setTimeout(() => ripple.remove(), 600);
+      // Random offset for natural look
+      const offsetX = (Math.random() - 0.5) * 15;
+      const offsetY = (Math.random() - 0.5) * 15;
+      
+      stardust.style.left = (x + offsetX) + 'px';
+      stardust.style.top = (y + offsetY) + 'px';
+      
+      // Random size for variety (very small and subtle)
+      const size = 2 + Math.random() * 3;
+      stardust.style.width = size + 'px';
+      stardust.style.height = size + 'px';
+      
+      // Random delay for twinkling effect
+      stardust.style.animationDelay = (Math.random() * 0.2) + 's';
+      
+      document.body.appendChild(stardust);
+      
+      setTimeout(() => stardust.remove(), 1200);
     }
 
-    // Create particle burst
-    function createParticles(x: number, y: number) {
-      const particleCount = 6;
+    // Create star sparkle (emoji star)
+    function createStar(x: number, y: number) {
+      const star = document.createElement('div');
+      star.className = 'cursor-star';
       
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'cursor-particle';
+      const offsetX = (Math.random() - 0.5) * 20;
+      const offsetY = (Math.random() - 0.5) * 20;
+      
+      star.style.left = (x + offsetX) + 'px';
+      star.style.top = (y + offsetY) + 'px';
+      
+      document.body.appendChild(star);
+      
+      setTimeout(() => star.remove(), 1000);
+    }
+
+    // Create golden burst on click
+    function createGoldenBurst(x: number, y: number) {
+      const burstCount = 12; // More particles for magical effect
+      
+      for (let i = 0; i < burstCount; i++) {
+        const stardust = document.createElement('div');
+        stardust.className = 'cursor-stardust';
         
-        const angle = (Math.PI * 2 * i) / particleCount;
-        const velocity = 30 + Math.random() * 20;
-        const tx = Math.cos(angle) * velocity;
-        const ty = Math.sin(angle) * velocity;
+        const angle = (Math.PI * 2 * i) / burstCount;
+        const velocity = 15 + Math.random() * 25;
+        const offsetX = Math.cos(angle) * velocity;
+        const offsetY = Math.sin(angle) * velocity;
         
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        particle.style.setProperty('--tx', tx + 'px');
-        particle.style.setProperty('--ty', ty + 'px');
+        stardust.style.left = x + 'px';
+        stardust.style.top = y + 'px';
         
-        document.body.appendChild(particle);
+        // Animate outward
+        setTimeout(() => {
+          stardust.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+          stardust.style.transition = 'transform 0.8s ease-out';
+        }, 10);
         
-        setTimeout(() => particle.remove(), 800);
+        const size = 3 + Math.random() * 2;
+        stardust.style.width = size + 'px';
+        stardust.style.height = size + 'px';
+        
+        document.body.appendChild(stardust);
+        
+        setTimeout(() => stardust.remove(), 1200);
+      }
+      
+      // Add a few stars to the burst
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          createStar(x, y);
+        }, i * 100);
       }
     }
-
-    // Create trail effect
-    function createTrail(x: number, y: number) {
-      const trail = document.createElement('div');
-      trail.className = 'cursor-trail';
-      trail.innerHTML = `
-        <svg width="24" height="24" viewBox="0 0 48 48">
-          <path fill="#ff4444" opacity="0.6" d="M 24 4 L 40 36 Q 38 42, 32 44 L 16 44 Q 10 42, 8 36 Z"/>
-        </svg>
-      `;
-      trail.style.left = (x - 12) + 'px';
-      trail.style.top = (y - 12) + 'px';
-      document.body.appendChild(trail);
-      
-      setTimeout(() => trail.remove(), 500);
-    }
-
-    // Hide follower when mouse leaves window
-    document.addEventListener('mouseleave', () => {
-      if (follower) {
-        follower.classList.remove('active');
-      }
-    });
-
-    // Scale follower on interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, [role="button"], input, textarea');
-    
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        if (follower) {
-          follower.style.transform = 'scale(1.5)';
-          follower.style.borderColor = 'rgba(255, 68, 68, 0.8)';
-        }
-      });
-      
-      el.addEventListener('mouseleave', () => {
-        if (follower) {
-          follower.style.transform = 'scale(1)';
-          follower.style.borderColor = 'rgba(255, 68, 68, 0.5)';
-        }
-      });
-    });
   }
 
   // Initialize on page load
@@ -147,9 +133,10 @@
 </script>
 
 <style>
-  /* Ensure cursor follower is always on top */
-  .cursor-follower {
-    mix-blend-mode: difference;
+  /* Golden stardust blending for elegant effect */
+  .cursor-stardust,
+  .cursor-star {
+    mix-blend-mode: screen;
   }
 </style>
 

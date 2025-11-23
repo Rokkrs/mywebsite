@@ -30,68 +30,106 @@ a:hover, button:hover, [role="button"]:hover {
   }
 }
 
-/* Cursor Follower Circle - Creates a smooth following effect */
-.cursor-follower {
+/* Golden Stardust Trail - Elegant sparkling effect */
+.cursor-stardust {
   position: fixed;
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(255, 68, 68, 0.5);
-  border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  transition: transform 0.15s ease-out, opacity 0.3s ease;
-  opacity: 0;
-  background: radial-gradient(circle, rgba(255, 68, 68, 0.1) 0%, transparent 70%);
-}
-
-.cursor-follower.active {
-  opacity: 1;
-}
-
-/* Cursor click ripple effect */
-.cursor-ripple {
-  position: fixed;
-  border: 2px solid #ff4444;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, rgba(255, 223, 0, 0.4) 50%, transparent 100%);
   border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  animation: ripple-animation 0.6s ease-out;
+  opacity: 0;
+  animation: stardust-twinkle 1.2s ease-out forwards;
+  box-shadow: 
+    0 0 4px rgba(255, 215, 0, 0.4),
+    0 0 8px rgba(255, 215, 0, 0.2),
+    0 0 12px rgba(255, 215, 0, 0.1);
 }
 
-@keyframes ripple-animation {
-  from {
-    width: 20px;
-    height: 20px;
+@keyframes stardust-twinkle {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  10% {
     opacity: 1;
   }
-  to {
-    width: 60px;
-    height: 60px;
+  50% {
+    opacity: 0.6;
+    transform: scale(1) rotate(180deg);
+  }
+  100% {
     opacity: 0;
+    transform: scale(0.3) rotate(360deg);
   }
 }
 
-/* Particle effect on cursor movement */
-.cursor-particle {
+/* Star shapes with different sizes */
+.cursor-star {
   position: fixed;
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(135deg, #ff4444 0%, #ff6b6b 100%);
-  border-radius: 50%;
   pointer-events: none;
-  z-index: 9997;
-  opacity: 0.8;
-  animation: particle-fade 0.8s ease-out forwards;
+  z-index: 9998;
+  opacity: 0;
+  animation: star-fade 1s ease-out forwards;
 }
 
-@keyframes particle-fade {
+.cursor-star::before {
+  content: '✨';
+  font-size: 12px;
+  filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.6));
+  animation: star-rotate 2s linear infinite;
+}
+
+@keyframes star-fade {
   0% {
-    transform: translate(0, 0) scale(1);
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+  20% {
     opacity: 0.8;
   }
   100% {
-    transform: translate(var(--tx), var(--ty)) scale(0);
     opacity: 0;
+    transform: translateY(-20px) scale(1.5);
+  }
+}
+
+@keyframes star-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Additional golden shimmer effects */
+.cursor-shimmer {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9997;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 215, 0, 0.6);
+  border-radius: 50%;
+  opacity: 0;
+  animation: shimmer-pulse 0.8s ease-out forwards;
+  box-shadow: 0 0 3px rgba(255, 215, 0, 0.4);
+}
+
+@keyframes shimmer-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
   }
 }
 
@@ -123,30 +161,7 @@ p, h1, h2, h3, h4, h5, h6, span, li {
   }
 }
 
-/* Smooth cursor trail effect */
-.cursor-trail {
-  position: fixed;
-  pointer-events: none;
-  z-index: 9996;
-  animation: trail-fade 0.5s ease-out forwards;
-}
-
-.cursor-trail svg {
-  width: 24px;
-  height: 24px;
-  opacity: 0.6;
-}
-
-@keyframes trail-fade {
-  from {
-    opacity: 0.6;
-    transform: scale(1) rotate(0deg);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.3) rotate(45deg);
-  }
-}
+/* Removed old trail effect - now using golden stardust */
 
 /* Hover effect for buttons with watermelon theme */
 button:hover,
