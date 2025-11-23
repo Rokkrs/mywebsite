@@ -1,0 +1,86 @@
+---
+interface Props {
+  pageTitle?: string;
+}
+
+const navigationItems = [
+  { name: 'Home', url: '/' },
+  { name: 'Projects', url: '#projects' },
+  { name: 'Skills', url: '#skills' },
+  { name: 'Contact', url: '#contact' },
+];
+
+const socialIcons = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/yourusername',
+    icon: 'i-uil-github',
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/yourprofile',
+    icon: 'i-uil-linkedin',
+  },
+  {
+    name: 'Twitter',
+    url: 'https://twitter.com/yourhandle',
+    icon: 'i-uil-twitter',
+  },
+];
+
+const { pageTitle } = Astro.props;
+---
+
+<header class='border-b-4 border-black flex justify-between p-6 items-center bg-white'>
+  {pageTitle && <h1 class='hidden'>{pageTitle}</h1>}
+  <a href='/' title='Back to Home'>
+    <p class='righteous text-2xl md:text-4xl'>iOS Engineer</p>
+  </a>
+  <nav class='hidden md:inline-block'>
+    <h2 class='hidden'>Navigation</h2>
+    <ul class='flex gap-8 poppins items-center'>
+      {
+        navigationItems.map((item) => (
+          <li>
+            <a
+              class='text-lg font-medium hover:text-blue hover:underline transition-all duration-150 ease-in-out'
+              href={item.url}
+              title={`Go to ${item.name}`}
+            >
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+      {
+        socialIcons.map((item) => (
+          <li>
+            <a
+              href={item.url}
+              class='hover:text-blue hover:underline transition-all duration-150 ease-in-out'
+              target='_blank'
+              title={`Visit ${item.name}`}
+            >
+              <div class:list={[item.icon, 'w-6 h-6']} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <nav class='md:hidden flex gap-4'>
+    <h2 class='hidden'>Mobile Navigation</h2>
+    <ul class='flex gap-4'>
+      {
+        socialIcons.map((item) => (
+          <li>
+            <a href={item.url} target='_blank' title={`Visit ${item.name}`}>
+              <div class:list={[item.icon, 'w-6 h-6']} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+

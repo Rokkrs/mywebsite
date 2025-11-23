@@ -1,0 +1,201 @@
+---
+import Layout from '@layouts/Default.astro';
+import { Card } from '@eliancodes/brutal-ui';
+import { Button } from '@eliancodes/brutal-ui';
+import { Pill } from '@eliancodes/brutal-ui';
+
+const skills = [
+  { name: 'Swift', category: 'language' },
+  { name: 'SwiftUI', category: 'framework' },
+  { name: 'UIKit', category: 'framework' },
+  { name: 'Combine', category: 'framework' },
+  { name: 'CoreData', category: 'framework' },
+  { name: 'Git', category: 'tool' },
+  { name: 'Xcode', category: 'tool' },
+  { name: 'REST APIs', category: 'backend' },
+  { name: 'Firebase', category: 'backend' },
+];
+
+const projects = [
+  {
+    name: 'Project One',
+    description: 'A modern iOS app built with SwiftUI that helps users track their daily habits.',
+    tech: ['SwiftUI', 'CoreData', 'Combine'],
+    url: '#',
+  },
+  {
+    name: 'Project Two',
+    description: 'Native iOS application featuring real-time data synchronization and offline support.',
+    tech: ['UIKit', 'Firebase', 'CoreData'],
+    url: '#',
+  },
+  {
+    name: 'Project Three',
+    description: 'E-commerce app with custom animations and seamless checkout experience.',
+    tech: ['SwiftUI', 'REST APIs', 'Stripe'],
+    url: '#',
+  },
+];
+---
+
+<Layout
+  title='iOS Engineer Portfolio'
+  pageTitle='iOS Engineer | Home'
+  description='iOS Engineer specializing in Swift, SwiftUI, and native iOS development.'
+>
+  <main class='bg-pink'>
+    <!-- Hero Section -->
+    <section id='hero' class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto'>
+        <Card>
+          <div class='flex flex-col items-start gap-6 p-4 md:p-8'>
+            <h1 class='outfit text-4xl md:text-6xl lg:text-8xl font-bold'>
+              Hi, I'm an <span class='text-blue'>iOS Engineer</span>
+            </h1>
+            <p class='poppins text-xl md:text-2xl lg:text-3xl max-w-3xl'>
+              I build beautiful, performant native iOS applications using Swift, SwiftUI, and UIKit.
+              Passionate about creating exceptional user experiences.
+            </p>
+            <div class='flex gap-4 flex-wrap'>
+              <Button href='#projects'>
+                View My Work &rarr;
+              </Button>
+              <Button href='#contact'>
+                Get In Touch
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id='about' class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto grid md:grid-cols-2 gap-8'>
+        <Card>
+          <h2 class='text-3xl md:text-5xl lg:text-6xl mb-6 dm-serif'>
+            About Me
+          </h2>
+          <p class='poppins text-lg mb-4'>
+            I'm a passionate iOS developer with expertise in creating native applications
+            that users love. I focus on clean code, smooth animations, and delightful
+            user experiences.
+          </p>
+          <p class='poppins text-lg'>
+            With years of experience in Swift and the iOS ecosystem, I've shipped
+            multiple apps to the App Store and helped teams deliver high-quality
+            mobile solutions.
+          </p>
+        </Card>
+
+        <Card>
+          <h2 class='text-3xl md:text-5xl lg:text-6xl mb-6 dm-serif'>
+            What I Do
+          </h2>
+          <ul class='poppins text-lg space-y-3'>
+            <li class='flex items-start'>
+              <span class='text-2xl mr-3'>📱</span>
+              <span>Native iOS app development with Swift</span>
+            </li>
+            <li class='flex items-start'>
+              <span class='text-2xl mr-3'>🎨</span>
+              <span>Modern UI/UX with SwiftUI and UIKit</span>
+            </li>
+            <li class='flex items-start'>
+              <span class='text-2xl mr-3'>⚡</span>
+              <span>Performance optimization and debugging</span>
+            </li>
+            <li class='flex items-start'>
+              <span class='text-2xl mr-3'>🔄</span>
+              <span>App Store deployment and CI/CD</span>
+            </li>
+          </ul>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id='skills' class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto'>
+        <Card>
+          <h2 class='text-3xl md:text-5xl lg:text-6xl mb-8 dm-serif'>
+            Skills & Technologies
+          </h2>
+          <div class='flex gap-3 flex-wrap'>
+            {
+              skills.map((skill) => (
+                <Pill>
+                  <span class='sanchez text-sm md:text-base'>{skill.name}</span>
+                </Pill>
+              ))
+            }
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id='projects' class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto'>
+        <h2 class='text-4xl md:text-6xl lg:text-7xl mb-8 dm-serif text-center'>
+          Featured Projects
+        </h2>
+        <div class='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+          {
+            projects.map((project) => (
+              <Card>
+                <div class='flex flex-col h-full p-4'>
+                  <h3 class='text-2xl md:text-3xl lg:text-4xl mb-4 outfit font-bold'>
+                    {project.name}
+                  </h3>
+                  <p class='poppins text-base md:text-lg mb-6 flex-grow'>
+                    {project.description}
+                  </p>
+                  <div class='flex gap-2 flex-wrap mb-4'>
+                    {project.tech.map((tech) => (
+                      <Pill>
+                        <span class='sanchez text-xs md:text-sm'>{tech}</span>
+                      </Pill>
+                    ))}
+                  </div>
+                  <Button href={project.url} target='_blank'>
+                    View Project &rarr;
+                  </Button>
+                </div>
+              </Card>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id='contact' class='p-6 md:p-12'>
+      <div class='max-w-4xl mx-auto'>
+        <Card>
+          <div class='text-center p-8'>
+            <h2 class='text-4xl md:text-6xl lg:text-7xl mb-6 dm-serif'>
+              Let's Work Together
+            </h2>
+            <p class='poppins text-lg md:text-xl mb-8 max-w-2xl mx-auto'>
+              I'm always interested in hearing about new projects and opportunities.
+              Whether you have a question or just want to say hi, feel free to reach out!
+            </p>
+            <div class='flex gap-4 justify-center flex-wrap'>
+              <Button href='mailto:your.email@example.com'>
+                Send Email
+              </Button>
+              <Button href='https://linkedin.com/in/yourprofile' target='_blank'>
+                LinkedIn
+              </Button>
+              <Button href='https://github.com/yourusername' target='_blank'>
+                GitHub
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+  </main>
+</Layout>
+
