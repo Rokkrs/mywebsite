@@ -1,0 +1,128 @@
+---
+import Layout from '@layouts/Default.astro';
+import { Card } from '@eliancodes/brutal-ui';
+import { Button } from '@eliancodes/brutal-ui';
+import { Pill } from '@eliancodes/brutal-ui';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Format date
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+}
+---
+
+<Layout
+  title={`${post.data.title} - Blog`}
+  pageTitle={post.data.title}
+  description={post.data.description}
+>
+  <main class='bg-[#043915]'>
+    <!-- Back Button -->
+    <section class='p-6 md:p-12 pb-0'>
+      <div class='max-w-4xl mx-auto'>
+        <Button href='/blog'>
+          ← Volver al Blog
+        </Button>
+      </div>
+    </section>
+
+    <!-- Article Header -->
+    <section class='p-6 md:p-12'>
+      <div class='max-w-4xl mx-auto'>
+        <Card>
+          <article class='p-6 md:p-10'>
+            {post.data.image && (
+              <div class='mb-8 -mx-6 md:-mx-10 -mt-6 md:-mt-10'>
+                <img
+                  src={post.data.image}
+                  alt={post.data.title}
+                  class='w-full h-64 md:h-96 object-cover border-b-4 border-black'
+                />
+              </div>
+            )}
+
+            <h1 class='outfit text-3xl md:text-5xl lg:text-6xl font-bold mb-6'>
+              {post.data.title}
+            </h1>
+
+            <div class='flex flex-wrap items-center gap-4 mb-6 pb-6 border-b-2 border-gray-200'>
+              <p class='sanchez text-gray-600'>
+                {formatDate(post.data.pubDate)}
+              </p>
+              <span class='text-gray-400'>•</span>
+              <p class='sanchez text-gray-600'>
+                Por {post.data.author}
+              </p>
+            </div>
+
+            {post.data.tags.length > 0 && (
+              <div class='flex gap-2 flex-wrap mb-8'>
+                {post.data.tags.map((tag) => (
+                  <Pill>
+                    <span class='sanchez'>{tag}</span>
+                  </Pill>
+                ))}
+              </div>
+            )}
+
+            <!-- Article Content -->
+            <div class='prose prose-lg max-w-none poppins
+              prose-headings:outfit prose-headings:font-bold
+              prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4
+              prose-h3:text-2xl prose-h3:mt-6 prose-h3:mb-3
+              prose-p:mb-4 prose-p:leading-relaxed
+              prose-a:text-blue prose-a:underline hover:prose-a:no-underline
+              prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
+              prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
+              prose-li:mb-2
+              prose-blockquote:border-l-4 prose-blockquote:border-blue 
+              prose-blockquote:pl-4 prose-blockquote:italic
+              prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 
+              prose-code:rounded prose-code:text-sm
+              prose-pre:bg-gray-900 prose-pre:text-white prose-pre:p-4 
+              prose-pre:rounded prose-pre:overflow-x-auto
+              prose-img:rounded prose-img:border-2 prose-img:border-black
+            '>
+              <Content />
+            </div>
+          </article>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class='p-6 md:p-12 pt-0'>
+      <div class='max-w-4xl mx-auto'>
+        <Card>
+          <div class='p-6 text-center'>
+            <h2 class='text-2xl md:text-3xl mb-4 outfit'>
+              ¿Te gustó este artículo?
+            </h2>
+            <p class='poppins mb-6'>
+              Vuelve al blog para leer más contenido interesante.
+            </p>
+            <Button href='/blog'>
+              Ver todos los posts
+            </Button>
+          </div>
+        </Card>
+      </div>
+    </section>
+  </main>
+</Layout>
+

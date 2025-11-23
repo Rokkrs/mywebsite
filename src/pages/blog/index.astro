@@ -1,0 +1,142 @@
+---
+import Layout from '@layouts/Default.astro';
+import { Card } from '@eliancodes/brutal-ui';
+import { Button } from '@eliancodes/brutal-ui';
+import { Pill } from '@eliancodes/brutal-ui';
+import { getCollection } from 'astro:content';
+
+// Get all blog posts
+const allPosts = await getCollection('blog');
+
+// Filter out drafts and sort by date (newest first)
+const posts = allPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Get unique tags
+const allTags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+// Format date
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+}
+---
+
+<Layout
+  title='Blog - Oscar Cuadra'
+  pageTitle='Blog | Oscar Cuadra'
+  description='Comparto ideas, recomendaciones de libros, aprendizajes sobre desarrollo iOS y más.'
+>
+  <main class='bg-[#043915]'>
+    <!-- Hero Section -->
+    <section class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto'>
+        <Card>
+          <div class='p-6 md:p-10 text-center'>
+            <h1 class='outfit text-4xl md:text-6xl lg:text-7xl font-bold mb-6'>
+              📚 Mi Blog
+            </h1>
+            <p class='poppins text-lg md:text-xl max-w-3xl mx-auto'>
+              Comparto ideas, reflexiones sobre desarrollo iOS, recomendaciones de libros,
+              aprendizajes y todo lo que me parece interesante.
+            </p>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Tags Filter -->
+    {allTags.length > 0 && (
+      <section class='p-6 md:p-12 pt-0'>
+        <div class='max-w-7xl mx-auto'>
+          <Card>
+            <div class='p-6'>
+              <h2 class='text-2xl md:text-3xl mb-4 dm-serif'>Categorías</h2>
+              <div class='flex gap-3 flex-wrap'>
+                {allTags.map((tag) => (
+                  <Pill>
+                    <span class='sanchez text-sm md:text-base'>{tag}</span>
+                  </Pill>
+                ))}
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+    )}
+
+    <!-- Blog Posts Grid -->
+    <section class='p-6 md:p-12 pt-0'>
+      <div class='max-w-7xl mx-auto'>
+        {posts.length === 0 ? (
+          <Card>
+            <div class='p-10 text-center'>
+              <h2 class='text-2xl md:text-3xl mb-4 outfit'>
+                📝 Próximamente...
+              </h2>
+              <p class='poppins text-lg'>
+                Estoy trabajando en contenido nuevo. ¡Vuelve pronto para leer mis posts!
+              </p>
+            </div>
+          </Card>
+        ) : (
+          <div class='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+            {posts.map((post) => (
+              <Card>
+                <article class='flex flex-col h-full p-6'>
+                  {post.data.image && (
+                    <div class='mb-4 -mx-6 -mt-6'>
+                      <img
+                        src={post.data.image}
+                        alt={post.data.title}
+                        class='w-full h-48 object-cover border-b-4 border-black'
+                      />
+                    </div>
+                  )}
+                  
+                  <div class='flex-grow'>
+                    <h2 class='text-2xl md:text-3xl font-bold mb-3 outfit'>
+                      <a
+                        href={`/blog/${post.id}`}
+                        class='hover:text-blue transition-colors'
+                      >
+                        {post.data.title}
+                      </a>
+                    </h2>
+                    
+                    <p class='text-sm text-gray-600 mb-3 sanchez'>
+                      {formatDate(post.data.pubDate)} • {post.data.author}
+                    </p>
+                    
+                    <p class='poppins mb-4'>
+                      {post.data.description}
+                    </p>
+                  </div>
+
+                  {post.data.tags.length > 0 && (
+                    <div class='flex gap-2 flex-wrap mb-4'>
+                      {post.data.tags.map((tag) => (
+                        <Pill>
+                          <span class='sanchez text-xs'>{tag}</span>
+                        </Pill>
+                      ))}
+                    </div>
+                  )}
+
+                  <Button href={`/blog/${post.id}`}>
+                    Leer más &rarr;
+                  </Button>
+                </article>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+</Layout>
+

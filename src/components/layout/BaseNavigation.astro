@@ -5,9 +5,10 @@ interface Props {
 
 const navigationItems = [
   { name: 'Home', url: '/' },
-  { name: 'Projects', url: '#projects' },
-  { name: 'Skills', url: '#skills' },
-  { name: 'Contact', url: '#contact' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Projects', url: '/#projects' },
+  { name: 'Skills', url: '/#skills' },
+  { name: 'Contact', url: '/#contact' },
 ];
 
 const socialIcons = [
@@ -63,9 +64,10 @@ const { pageTitle } = Astro.props;
       }
     </ul>
   </nav>
-  <nav class='md:hidden flex gap-4'>
+  <nav class='md:hidden flex gap-4 items-center'>
     <h2 class='hidden'>Mobile Navigation</h2>
-    <ul class='flex gap-4'>
+    <ul class='flex gap-4 items-center'>
+      <li><a href='/blog' class='poppins font-medium'>Blog</a></li>
       {
         socialIcons.map((item) => (
           <li>
