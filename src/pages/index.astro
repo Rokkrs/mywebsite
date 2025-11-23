@@ -3,6 +3,8 @@ import Layout from '@layouts/Default.astro';
 import { Card } from '@eliancodes/brutal-ui';
 import { Button } from '@eliancodes/brutal-ui';
 import { Pill } from '@eliancodes/brutal-ui';
+import LinkedInBadge from '@components/generic/LinkedInBadge.astro';
+import GitHubActivity from '@components/generic/GitHubActivity.astro';
 
 const skills = [
   { name: 'Swift', category: 'language' },
@@ -39,9 +41,9 @@ const projects = [
 ---
 
 <Layout
-  title='iOS Engineer Portfolio'
-  pageTitle='iOS Engineer | Home'
-  description='iOS Engineer specializing in Swift, SwiftUI, and native iOS development.'
+  title='Oscar Cuadra - iOS Engineer'
+  pageTitle='Oscar Cuadra | iOS Engineer'
+  description='Oscar Cuadra - iOS Engineer specializing in Swift, SwiftUI, and native iOS development. Building exceptional mobile experiences.'
 >
   <main class='bg-pink'>
     <!-- Hero Section -->
@@ -50,10 +52,10 @@ const projects = [
         <Card>
           <div class='flex flex-col items-start gap-6 p-4 md:p-8'>
             <h1 class='outfit text-4xl md:text-6xl lg:text-8xl font-bold'>
-              Hi, I'm an <span class='text-blue'>iOS Engineer</span>
+              Hi, I'm <span class='text-blue'>Oscar Cuadra</span>
             </h1>
             <p class='poppins text-xl md:text-2xl lg:text-3xl max-w-3xl'>
-              I build beautiful, performant native iOS applications using Swift, SwiftUI, and UIKit.
+              iOS Engineer building beautiful, performant native iOS applications using Swift, SwiftUI, and UIKit.
               Passionate about creating exceptional user experiences.
             </p>
             <div class='flex gap-4 flex-wrap'>
@@ -169,26 +171,51 @@ const projects = [
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id='contact' class='p-6 md:p-12'>
-      <div class='max-w-4xl mx-auto'>
+    <!-- GitHub Activity Section -->
+    <section id='github-activity' class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto'>
+        <h2 class='text-4xl md:text-6xl lg:text-7xl mb-8 dm-serif text-center'>
+          GitHub Activity
+        </h2>
         <Card>
-          <div class='text-center p-8'>
-            <h2 class='text-4xl md:text-6xl lg:text-7xl mb-6 dm-serif'>
+          <div class='p-4'>
+            <GitHubActivity username='Rokkrs' />
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- LinkedIn & Contact Section -->
+    <section id='contact' class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto grid md:grid-cols-2 gap-8'>
+        <!-- LinkedIn Badge -->
+        <Card>
+          <div class='p-8'>
+            <h2 class='text-3xl md:text-5xl mb-6 dm-serif text-center'>
+              Connect on LinkedIn
+            </h2>
+            <LinkedInBadge />
+          </div>
+        </Card>
+
+        <!-- Contact -->
+        <Card>
+          <div class='p-8'>
+            <h2 class='text-3xl md:text-5xl mb-6 dm-serif text-center'>
               Let's Work Together
             </h2>
-            <p class='poppins text-lg md:text-xl mb-8 max-w-2xl mx-auto'>
+            <p class='poppins text-lg mb-8'>
               I'm always interested in hearing about new projects and opportunities.
               Whether you have a question or just want to say hi, feel free to reach out!
             </p>
-            <div class='flex gap-4 justify-center flex-wrap'>
+            <div class='flex gap-4 flex-wrap'>
               <Button href='mailto:your.email@example.com'>
                 Send Email
               </Button>
-              <Button href='https://linkedin.com/in/yourprofile' target='_blank'>
+              <Button href='https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/' target='_blank'>
                 LinkedIn
               </Button>
-              <Button href='https://github.com/yourusername' target='_blank'>
+              <Button href='https://github.com/Rokkrs' target='_blank'>
                 GitHub
               </Button>
             </div>

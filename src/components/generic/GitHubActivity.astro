@@ -1,0 +1,72 @@
+---
+// GitHub Activity Component
+// Shows GitHub profile and contribution graph
+interface Props {
+  username: string;
+}
+
+const { username } = Astro.props;
+---
+
+<div class='github-activity'>
+  <div class='github-stats grid md:grid-cols-2 gap-4'>
+    <!-- GitHub Stats Card -->
+    <div class='github-card'>
+      <img 
+        src={`https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=default&hide_border=true&bg_color=white&title_color=000000&icon_color=0000ff&text_color=000000`}
+        alt="GitHub Stats"
+        loading="lazy"
+        class='w-full h-auto'
+      />
+    </div>
+    
+    <!-- Top Languages Card -->
+    <div class='github-card'>
+      <img 
+        src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=default&hide_border=true&bg_color=white&title_color=000000&text_color=000000`}
+        alt="Top Languages"
+        loading="lazy"
+        class='w-full h-auto'
+      />
+    </div>
+  </div>
+  
+  <!-- GitHub Contribution Graph -->
+  <div class='github-contributions mt-4'>
+    <img 
+      src={`https://ghchart.rshah.org/0000ff/${username}`}
+      alt="GitHub Contributions"
+      loading="lazy"
+      class='w-full h-auto'
+    />
+  </div>
+</div>
+
+<style>
+  .github-activity {
+    width: 100%;
+  }
+  
+  .github-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border: 3px solid black;
+    padding: 1rem;
+  }
+  
+  .github-card img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .github-contributions {
+    background: white;
+    border: 3px solid black;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
