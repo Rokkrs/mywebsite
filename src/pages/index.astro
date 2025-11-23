@@ -5,6 +5,7 @@ import { Button } from '@eliancodes/brutal-ui';
 import { Pill } from '@eliancodes/brutal-ui';
 import LinkedInBadge from '@components/generic/LinkedInBadge.astro';
 import GitHubActivity from '@components/generic/GitHubActivity.astro';
+import LinkedInActivity from '@components/generic/LinkedInActivity.astro';
 
 const skills = [
   { name: 'Swift', category: 'language' },
@@ -37,6 +38,24 @@ const projects = [
     tech: ['SwiftUI', 'REST APIs', 'Stripe'],
     url: '#',
   },
+];
+
+// LinkedIn Featured Posts - Update these manually with your real posts
+const linkedInPosts = [
+  {
+    title: 'Building Native iOS Apps with SwiftUI',
+    excerpt: 'Sharing my experience transitioning from UIKit to SwiftUI and the benefits of declarative UI...',
+    date: 'November 2024',
+    url: 'https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/',
+    // image: '/path/to/post-image.jpg', // Optional: Add image path
+  },
+  {
+    title: 'iOS Development Best Practices',
+    excerpt: 'Key lessons learned from shipping production iOS applications...',
+    date: 'October 2024',
+    url: 'https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/',
+  },
+  // Add more posts as needed, or set to empty array [] to show the "Follow on LinkedIn" CTA
 ];
 ---
 
@@ -168,6 +187,20 @@ const projects = [
             ))
           }
         </div>
+      </div>
+    </section>
+
+    <!-- LinkedIn Activity Section -->
+    <section id='linkedin-activity' class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto'>
+        <h2 class='text-4xl md:text-6xl lg:text-7xl mb-8 dm-serif text-center'>
+          LinkedIn Profile & Activity
+        </h2>
+        <Card>
+          <div class='p-4'>
+            <LinkedInActivity featuredPosts={linkedInPosts} />
+          </div>
+        </Card>
       </div>
     </section>
 
