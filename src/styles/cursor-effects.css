@@ -1,7 +1,7 @@
 /* Custom Watermelon Cursor with Beautiful Effects */
 
 * {
-  cursor: url('/cursor-watermelon.svg') 12 12, auto;
+  cursor: url('/cursor-watermelon.svg') 18 10, auto;
 }
 
 /* Cursor Trail Effect */
@@ -12,7 +12,7 @@ body {
 
 /* Cursor glow effect on hover over interactive elements */
 a, button, [role="button"], input, textarea, select {
-  cursor: url('/cursor-watermelon.svg') 12 12, pointer;
+  cursor: url('/cursor-watermelon.svg') 18 10, pointer;
   position: relative;
 }
 
@@ -102,16 +102,16 @@ a:hover, button:hover, [role="button"]:hover {
 
 /* Special cursor for draggable items */
 [draggable="true"] {
-  cursor: url('/cursor-watermelon.svg') 12 12, grab;
+  cursor: url('/cursor-watermelon.svg') 18 10, grab;
 }
 
 [draggable="true"]:active {
-  cursor: url('/cursor-watermelon.svg') 12 12, grabbing;
+  cursor: url('/cursor-watermelon.svg') 18 10, grabbing;
 }
 
 /* Text selection cursor */
 p, h1, h2, h3, h4, h5, h6, span, li {
-  cursor: url('/cursor-watermelon.svg') 12 12, text;
+  cursor: url('/cursor-watermelon.svg') 18 10, text;
 }
 
 /* Hide cursor follower on mobile */
