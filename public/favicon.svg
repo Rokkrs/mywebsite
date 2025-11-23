@@ -1,44 +1,99 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Tree icon optimized for favicon -->
+  <!-- Trophy/Award icon for favicon -->
   <defs>
     <style>
-      .tree-trunk { fill: #8B4513; stroke: #1a1a1a; stroke-width: 12; }
-      .tree-foliage { fill: #22c55e; stroke: #1a1a1a; stroke-width: 12; }
-      .tree-shadow { fill: #16a34a; opacity: 0.6; }
+      .bg-circle { fill: #00ff00; }
+      .bg-shadow { fill: #00dd00; }
+      .trophy-gold { fill: #ffd700; }
+      .trophy-dark { fill: #daa520; }
+      .base-brown { fill: #8B4513; }
+      .base-dark { fill: #654321; }
+      .plate-gold { fill: #ffcc00; }
     </style>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffed4e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#daa520;stop-opacity:1" />
+    </linearGradient>
   </defs>
   
-  <!-- Tree trunk -->
-  <path class="tree-trunk" d="M 220 280 L 220 480 Q 220 490 230 490 L 282 490 Q 292 490 292 480 L 292 280 Z"/>
+  <!-- Background circle -->
+  <circle class="bg-circle" cx="256" cy="256" r="256"/>
   
-  <!-- Tree foliage shadow -->
-  <ellipse class="tree-shadow" cx="280" cy="200" rx="140" ry="150"/>
+  <!-- Shadow gradient overlay -->
+  <path class="bg-shadow" opacity="0.3" d="M 512 256 L 256 0 L 256 512 Z"/>
   
-  <!-- Tree foliage -->
-  <path class="tree-foliage" d="
-    M 256 40
-    Q 200 60, 160 100
-    Q 120 140, 110 190
-    Q 100 240, 130 280
-    Q 160 320, 200 330
-    L 200 270
-    Q 180 260, 170 240
-    Q 160 220, 165 200
-    Q 170 180, 190 170
-    Q 200 100, 256 60
-    Q 312 100, 322 170
-    Q 342 180, 347 200
-    Q 352 220, 342 240
-    Q 332 260, 312 270
-    L 312 330
-    Q 352 320, 382 280
-    Q 412 240, 402 190
-    Q 392 140, 352 100
-    Q 312 60, 256 40
+  <!-- Trophy Base - Bottom Platform -->
+  <rect class="base-dark" x="170" y="420" width="172" height="25" rx="3"/>
+  
+  <!-- Trophy Base - Middle Platform -->
+  <rect class="base-brown" x="185" y="395" width="142" height="25" rx="2"/>
+  
+  <!-- Trophy Base - Top Platform with plate -->
+  <rect class="base-brown" x="200" y="360" width="112" height="35" rx="2"/>
+  <rect class="plate-gold" x="215" y="375" width="82" height="15" rx="2"/>
+  
+  <!-- Trophy Cup - Main Body -->
+  <path fill="url(#goldGradient)" d="
+    M 230 340
+    L 220 240
+    Q 220 220, 230 210
+    L 282 210
+    Q 292 220, 292 240
+    L 282 340
+    Q 280 355, 256 355
+    Q 232 355, 230 340
     Z
   "/>
   
-  <!-- Tree highlights -->
-  <ellipse fill="#4ade80" opacity="0.4" cx="230" cy="150" rx="50" ry="60"/>
-  <ellipse fill="#4ade80" opacity="0.3" cx="290" cy="180" rx="40" ry="50"/>
+  <!-- Trophy Cup - Darker right side -->
+  <path class="trophy-dark" opacity="0.4" d="
+    M 256 210
+    L 282 210
+    Q 292 220, 292 240
+    L 282 340
+    Q 280 355, 256 355
+    Z
+  "/>
+  
+  <!-- Trophy Handles - Left -->
+  <path class="trophy-gold" d="
+    M 220 240
+    Q 190 240, 180 250
+    Q 175 260, 180 270
+    Q 185 280, 200 280
+    L 220 280
+    Z
+  "/>
+  
+  <!-- Trophy Handles - Right -->
+  <path class="trophy-gold" d="
+    M 292 240
+    Q 322 240, 332 250
+    Q 337 260, 332 270
+    Q 327 280, 312 280
+    L 292 280
+    Z
+  "/>
+  
+  <!-- Trophy Head/Top - Neck -->
+  <ellipse class="trophy-gold" cx="256" cy="200" rx="20" ry="15"/>
+  
+  <!-- Trophy Head/Top - Head -->
+  <ellipse fill="url(#goldGradient)" cx="256" cy="165" rx="25" ry="35"/>
+  
+  <!-- Trophy Head - Highlight -->
+  <ellipse class="trophy-gold" opacity="0.6" cx="245" cy="155" rx="12" ry="18"/>
+  
+  <!-- Trophy Head - Shadow -->
+  <ellipse class="trophy-dark" opacity="0.3" cx="267" cy="175" rx="10" ry="15"/>
+  
+  <!-- Trophy Top Cap -->
+  <ellipse class="trophy-gold" cx="256" cy="130" rx="15" ry="10"/>
+  
+  <!-- Trophy Cup Rim -->
+  <ellipse class="trophy-gold" cx="256" cy="210" rx="31" ry="8"/>
+  
+  <!-- Shine/Highlight on cup -->
+  <ellipse fill="#ffed4e" opacity="0.5" cx="240" cy="260" rx="15" ry="40"/>
 </svg>
