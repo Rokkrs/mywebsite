@@ -3,7 +3,7 @@ import Layout from '@layouts/Default.astro';
 import { Card } from '@eliancodes/brutal-ui';
 import { Button } from '@eliancodes/brutal-ui';
 import { Pill } from '@eliancodes/brutal-ui';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 const post = entry.data;
 
 // Format date
