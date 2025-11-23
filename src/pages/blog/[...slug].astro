@@ -7,14 +7,15 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
+  return posts.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
   }));
 }
 
-const { post } = Astro.props;
-const { Content } = await post.render();
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const post = entry.data;
 
 // Format date
 function formatDate(date: Date) {
@@ -27,9 +28,9 @@ function formatDate(date: Date) {
 ---
 
 <Layout
-  title={`${post.data.title} - Blog`}
-  pageTitle={post.data.title}
-  description={post.data.description}
+  title={`${post.title} - Blog`}
+  pageTitle={post.title}
+  description={post.description}
 >
   <main class='bg-[#043915]'>
     <!-- Back Button -->
@@ -46,33 +47,33 @@ function formatDate(date: Date) {
       <div class='max-w-4xl mx-auto'>
         <Card>
           <article class='p-6 md:p-10'>
-            {post.data.image && (
+            {post.image && (
               <div class='mb-8 -mx-6 md:-mx-10 -mt-6 md:-mt-10'>
                 <img
-                  src={post.data.image}
-                  alt={post.data.title}
+                  src={post.image}
+                  alt={post.title}
                   class='w-full h-64 md:h-96 object-cover border-b-4 border-black'
                 />
               </div>
             )}
 
             <h1 class='outfit text-3xl md:text-5xl lg:text-6xl font-bold mb-6'>
-              {post.data.title}
+              {post.title}
             </h1>
 
             <div class='flex flex-wrap items-center gap-4 mb-6 pb-6 border-b-2 border-gray-200'>
               <p class='sanchez text-gray-600'>
-                {formatDate(post.data.pubDate)}
+                {formatDate(post.pubDate)}
               </p>
               <span class='text-gray-400'>•</span>
               <p class='sanchez text-gray-600'>
-                Por {post.data.author}
+                Por {post.author}
               </p>
             </div>
 
-            {post.data.tags.length > 0 && (
+            {post.tags.length > 0 && (
               <div class='flex gap-2 flex-wrap mb-8'>
-                {post.data.tags.map((tag) => (
+                {post.tags.map((tag) => (
                   <Pill>
                     <span class='sanchez'>{tag}</span>
                   </Pill>
