@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Watermelon Slice Cursor -->
+  <defs>
+    <style>
+      .rind-outer { fill: #2d8c3c; }
+      .rind-middle { fill: #4CAF50; }
+      .rind-inner { fill: #e8f5e9; }
+      .flesh { fill: #ff4444; }
+      .seed-black { fill: #1a1a1a; }
+    </style>
+    <filter id="shadow">
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Main watermelon slice shape -->
+  <g filter="url(#shadow)">
+    <!-- Outer green rind -->
+    <path class="rind-outer" d="M 24 4 L 40 36 Q 38 42, 32 44 L 16 44 Q 10 42, 8 36 Z"/>
+    
+    <!-- Middle lighter green -->
+    <path class="rind-middle" d="M 24 8 L 38 36 Q 37 40, 32 42 L 16 42 Q 11 40, 10 36 Z"/>
+    
+    <!-- White/light layer -->
+    <path class="rind-inner" d="M 24 12 L 36 36 Q 35 38, 32 39 L 16 39 Q 13 38, 12 36 Z"/>
+    
+    <!-- Red flesh -->
+    <path class="flesh" d="M 24 16 L 34 36 L 14 36 Z"/>
+    
+    <!-- Seeds -->
+    <ellipse class="seed-black" cx="20" cy="28" rx="2" ry="3" transform="rotate(20 20 28)"/>
+    <ellipse class="seed-black" cx="24" cy="24" rx="2" ry="3" transform="rotate(-10 24 24)"/>
+    <ellipse class="seed-black" cx="28" cy="30" rx="2" ry="3" transform="rotate(15 28 30)"/>
+    <ellipse class="seed-black" cx="22" cy="33" rx="1.5" ry="2.5" transform="rotate(-15 22 33)"/>
+    <ellipse class="seed-black" cx="26" cy="34" rx="1.5" ry="2.5" transform="rotate(25 26 34)"/>
+  </g>
+  
+  <!-- Highlight for 3D effect -->
+  <path fill="white" opacity="0.3" d="M 24 16 L 28 26 L 24 22 Z"/>
+</svg>
+

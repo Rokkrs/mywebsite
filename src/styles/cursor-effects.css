@@ -1,0 +1,183 @@
+/* Custom Watermelon Cursor with Beautiful Effects */
+
+* {
+  cursor: url('/cursor-watermelon.svg') 12 12, auto;
+}
+
+/* Cursor Trail Effect */
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Cursor glow effect on hover over interactive elements */
+a, button, [role="button"], input, textarea, select {
+  cursor: url('/cursor-watermelon.svg') 12 12, pointer;
+  position: relative;
+}
+
+/* Add sparkle effect on clickable elements */
+a:hover, button:hover, [role="button"]:hover {
+  animation: cursor-pulse 0.6s ease-in-out;
+}
+
+@keyframes cursor-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 68, 68, 0.6));
+  }
+}
+
+/* Cursor Follower Circle - Creates a smooth following effect */
+.cursor-follower {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 68, 68, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease-out, opacity 0.3s ease;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(255, 68, 68, 0.1) 0%, transparent 70%);
+}
+
+.cursor-follower.active {
+  opacity: 1;
+}
+
+/* Cursor click ripple effect */
+.cursor-ripple {
+  position: fixed;
+  border: 2px solid #ff4444;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  animation: ripple-animation 0.6s ease-out;
+}
+
+@keyframes ripple-animation {
+  from {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+  }
+  to {
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+  }
+}
+
+/* Particle effect on cursor movement */
+.cursor-particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #ff4444 0%, #ff6b6b 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.8;
+  animation: particle-fade 0.8s ease-out forwards;
+}
+
+@keyframes particle-fade {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Glow effect when hovering over cards */
+.card-shadow:hover {
+  cursor: url('/cursor-watermelon.svg') 12 12, pointer;
+}
+
+/* Special cursor for draggable items */
+[draggable="true"] {
+  cursor: url('/cursor-watermelon.svg') 12 12, grab;
+}
+
+[draggable="true"]:active {
+  cursor: url('/cursor-watermelon.svg') 12 12, grabbing;
+}
+
+/* Text selection cursor */
+p, h1, h2, h3, h4, h5, h6, span, li {
+  cursor: url('/cursor-watermelon.svg') 12 12, text;
+}
+
+/* Hide cursor follower on mobile */
+@media (max-width: 768px) {
+  .cursor-follower,
+  .cursor-ripple,
+  .cursor-particle {
+    display: none;
+  }
+}
+
+/* Smooth cursor trail effect */
+.cursor-trail {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9996;
+  animation: trail-fade 0.5s ease-out forwards;
+}
+
+.cursor-trail svg {
+  width: 24px;
+  height: 24px;
+  opacity: 0.6;
+}
+
+@keyframes trail-fade {
+  from {
+    opacity: 0.6;
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.3) rotate(45deg);
+  }
+}
+
+/* Hover effect for buttons with watermelon theme */
+button:hover,
+a:hover {
+  position: relative;
+}
+
+button:hover::after,
+a:hover::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+  opacity: 0;
+  animation: button-dot 0.4s ease-out;
+}
+
+@keyframes button-dot {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+

@@ -1,0 +1,155 @@
+---
+// Custom Cursor Effects Component
+---
+
+<!-- Cursor Follower Element -->
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<script>
+  // Cursor effects functionality
+  function initCursorEffects() {
+    const follower = document.getElementById('cursorFollower');
+    if (!follower) return;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let followerX = 0;
+    let followerY = 0;
+    const speed = 0.1; // Smoothness of follower
+
+    // Update mouse position
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Show follower
+      if (follower) {
+        follower.classList.add('active');
+      }
+
+      // Create trail effect occasionally
+      if (Math.random() > 0.85) {
+        createTrail(e.clientX, e.clientY);
+      }
+    });
+
+    // Smooth follower animation
+    function animate() {
+      // Calculate smooth following
+      const distX = mouseX - followerX;
+      const distY = mouseY - followerY;
+      
+      followerX += distX * speed;
+      followerY += distY * speed;
+      
+      if (follower) {
+        follower.style.left = followerX - 20 + 'px';
+        follower.style.top = followerY - 20 + 'px';
+      }
+      
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Click ripple effect
+    document.addEventListener('click', (e) => {
+      createRipple(e.clientX, e.clientY);
+      createParticles(e.clientX, e.clientY);
+    });
+
+    // Create ripple effect
+    function createRipple(x: number, y: number) {
+      const ripple = document.createElement('div');
+      ripple.className = 'cursor-ripple';
+      ripple.style.left = (x - 10) + 'px';
+      ripple.style.top = (y - 10) + 'px';
+      document.body.appendChild(ripple);
+      
+      setTimeout(() => ripple.remove(), 600);
+    }
+
+    // Create particle burst
+    function createParticles(x: number, y: number) {
+      const particleCount = 6;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'cursor-particle';
+        
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const velocity = 30 + Math.random() * 20;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+        
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => particle.remove(), 800);
+      }
+    }
+
+    // Create trail effect
+    function createTrail(x: number, y: number) {
+      const trail = document.createElement('div');
+      trail.className = 'cursor-trail';
+      trail.innerHTML = `
+        <svg width="24" height="24" viewBox="0 0 48 48">
+          <path fill="#ff4444" opacity="0.6" d="M 24 4 L 40 36 Q 38 42, 32 44 L 16 44 Q 10 42, 8 36 Z"/>
+        </svg>
+      `;
+      trail.style.left = (x - 12) + 'px';
+      trail.style.top = (y - 12) + 'px';
+      document.body.appendChild(trail);
+      
+      setTimeout(() => trail.remove(), 500);
+    }
+
+    // Hide follower when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+      if (follower) {
+        follower.classList.remove('active');
+      }
+    });
+
+    // Scale follower on interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, [role="button"], input, textarea');
+    
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (follower) {
+          follower.style.transform = 'scale(1.5)';
+          follower.style.borderColor = 'rgba(255, 68, 68, 0.8)';
+        }
+      });
+      
+      el.addEventListener('mouseleave', () => {
+        if (follower) {
+          follower.style.transform = 'scale(1)';
+          follower.style.borderColor = 'rgba(255, 68, 68, 0.5)';
+        }
+      });
+    });
+  }
+
+  // Initialize on page load
+  document.addEventListener('astro:page-load', initCursorEffects);
+  
+  // Also initialize on first load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCursorEffects);
+  } else {
+    initCursorEffects();
+  }
+</script>
+
+<style>
+  /* Ensure cursor follower is always on top */
+  .cursor-follower {
+    mix-blend-mode: difference;
+  }
+</style>
+

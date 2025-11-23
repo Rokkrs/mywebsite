@@ -1,99 +1,76 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Trophy/Award icon for favicon -->
+  <!-- Watermelon with Sunglasses Favicon -->
   <defs>
     <style>
-      .bg-circle { fill: #00ff00; }
-      .bg-shadow { fill: #00dd00; }
-      .trophy-gold { fill: #ffd700; }
-      .trophy-dark { fill: #daa520; }
-      .base-brown { fill: #8B4513; }
-      .base-dark { fill: #654321; }
-      .plate-gold { fill: #ffcc00; }
+      .bg-sky { fill: #87CEEB; }
+      .melon-green { fill: #2d8c3c; }
+      .melon-dark-green { fill: #1a5c28; }
+      .melon-light-green { fill: #4CAF50; }
+      .melon-white { fill: #f0f0f0; }
+      .melon-red { fill: #ff4444; }
+      .seed { fill: #1a1a1a; }
+      .glasses-frame { fill: #ff3366; stroke: #cc0033; stroke-width: 3; }
+      .glasses-lens { fill: #8B4513; opacity: 0.7; }
+      .smile { fill: none; stroke: #1a1a1a; stroke-width: 8; stroke-linecap: round; }
     </style>
-    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#ffed4e;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#daa520;stop-opacity:1" />
-    </linearGradient>
   </defs>
   
-  <!-- Background circle -->
-  <circle class="bg-circle" cx="256" cy="256" r="256"/>
+  <!-- Background -->
+  <circle class="bg-sky" cx="256" cy="256" r="256"/>
   
-  <!-- Shadow gradient overlay -->
-  <path class="bg-shadow" opacity="0.3" d="M 512 256 L 256 0 L 256 512 Z"/>
+  <!-- Watermelon Body - Main Circle -->
+  <circle class="melon-green" cx="256" cy="270" r="180"/>
   
-  <!-- Trophy Base - Bottom Platform -->
-  <rect class="base-dark" x="170" y="420" width="172" height="25" rx="3"/>
+  <!-- Watermelon Stripes -->
+  <path class="melon-dark-green" d="M 256 90 Q 380 150, 420 270 Q 380 390, 256 450 Z" opacity="0.3"/>
+  <path class="melon-light-green" d="M 256 90 Q 130 150, 92 270 Q 130 390, 256 450 Z" opacity="0.2"/>
   
-  <!-- Trophy Base - Middle Platform -->
-  <rect class="base-brown" x="185" y="395" width="142" height="25" rx="2"/>
+  <!-- Watermelon Stem/Leaf -->
+  <ellipse class="melon-green" cx="256" cy="80" rx="15" ry="25" transform="rotate(-10 256 80)"/>
+  <path class="melon-dark-green" d="M 256 60 Q 270 50, 275 65 Q 270 75, 256 80" fill="#4CAF50"/>
   
-  <!-- Trophy Base - Top Platform with plate -->
-  <rect class="base-brown" x="200" y="360" width="112" height="35" rx="2"/>
-  <rect class="plate-gold" x="215" y="375" width="82" height="15" rx="2"/>
-  
-  <!-- Trophy Cup - Main Body -->
-  <path fill="url(#goldGradient)" d="
-    M 230 340
-    L 220 240
-    Q 220 220, 230 210
-    L 282 210
-    Q 292 220, 292 240
-    L 282 340
-    Q 280 355, 256 355
-    Q 232 355, 230 340
-    Z
+  <!-- White rind layer -->
+  <path class="melon-white" d="
+    M 256 130
+    A 140 140 0 0 1 396 270
+    A 140 140 0 0 1 256 410
+    A 140 140 0 0 1 116 270
+    A 140 140 0 0 1 256 130
+    M 256 160
+    A 110 110 0 0 0 146 270
+    A 110 110 0 0 0 256 380
+    A 110 110 0 0 0 366 270
+    A 110 110 0 0 0 256 160
   "/>
   
-  <!-- Trophy Cup - Darker right side -->
-  <path class="trophy-dark" opacity="0.4" d="
-    M 256 210
-    L 282 210
-    Q 292 220, 292 240
-    L 282 340
-    Q 280 355, 256 355
-    Z
-  "/>
+  <!-- Red flesh (inner part) -->
+  <circle class="melon-red" cx="256" cy="270" r="110"/>
   
-  <!-- Trophy Handles - Left -->
-  <path class="trophy-gold" d="
-    M 220 240
-    Q 190 240, 180 250
-    Q 175 260, 180 270
-    Q 185 280, 200 280
-    L 220 280
-    Z
-  "/>
+  <!-- Sunglasses Frame - Left -->
+  <ellipse class="glasses-frame" cx="200" cy="230" rx="45" ry="38"/>
+  <!-- Sunglasses Frame - Right -->
+  <ellipse class="glasses-frame" cx="312" cy="230" rx="45" ry="38"/>
+  <!-- Sunglasses Bridge -->
+  <rect class="glasses-frame" x="245" y="220" width="22" height="12" rx="6"/>
   
-  <!-- Trophy Handles - Right -->
-  <path class="trophy-gold" d="
-    M 292 240
-    Q 322 240, 332 250
-    Q 337 260, 332 270
-    Q 327 280, 312 280
-    L 292 280
-    Z
-  "/>
+  <!-- Sunglasses Lenses - Left -->
+  <ellipse class="glasses-lens" cx="200" cy="230" rx="38" ry="32"/>
+  <!-- Sunglasses Lenses - Right -->
+  <ellipse class="glasses-lens" cx="312" cy="230" rx="38" ry="32"/>
   
-  <!-- Trophy Head/Top - Neck -->
-  <ellipse class="trophy-gold" cx="256" cy="200" rx="20" ry="15"/>
+  <!-- Sunglasses Shine -->
+  <ellipse fill="white" opacity="0.4" cx="190" cy="220" rx="15" ry="12"/>
+  <ellipse fill="white" opacity="0.4" cx="302" cy="220" rx="15" ry="12"/>
   
-  <!-- Trophy Head/Top - Head -->
-  <ellipse fill="url(#goldGradient)" cx="256" cy="165" rx="25" ry="35"/>
+  <!-- Seeds -->
+  <ellipse class="seed" cx="220" cy="300" rx="8" ry="12" transform="rotate(20 220 300)"/>
+  <ellipse class="seed" cx="256" cy="320" rx="8" ry="12" transform="rotate(-15 256 320)"/>
+  <ellipse class="seed" cx="292" cy="295" rx="8" ry="12" transform="rotate(25 292 295)"/>
+  <ellipse class="seed" cx="235" cy="350" rx="8" ry="12" transform="rotate(-20 235 350)"/>
+  <ellipse class="seed" cx="277" cy="345" rx="8" ry="12" transform="rotate(15 277 345)"/>
+  <ellipse class="seed" cx="200" cy="340" rx="7" ry="10" transform="rotate(10 200 340)"/>
+  <ellipse class="seed" cx="312" cy="335" rx="7" ry="10" transform="rotate(-25 312 335)"/>
   
-  <!-- Trophy Head - Highlight -->
-  <ellipse class="trophy-gold" opacity="0.6" cx="245" cy="155" rx="12" ry="18"/>
-  
-  <!-- Trophy Head - Shadow -->
-  <ellipse class="trophy-dark" opacity="0.3" cx="267" cy="175" rx="10" ry="15"/>
-  
-  <!-- Trophy Top Cap -->
-  <ellipse class="trophy-gold" cx="256" cy="130" rx="15" ry="10"/>
-  
-  <!-- Trophy Cup Rim -->
-  <ellipse class="trophy-gold" cx="256" cy="210" rx="31" ry="8"/>
-  
-  <!-- Shine/Highlight on cup -->
-  <ellipse fill="#ffed4e" opacity="0.5" cx="240" cy="260" rx="15" ry="40"/>
+  <!-- Big Smile -->
+  <path class="smile" d="M 180 300 Q 256 350, 332 300"/>
 </svg>
