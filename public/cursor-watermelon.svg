@@ -13,8 +13,8 @@
     </filter>
   </defs>
   
-  <!-- Main watermelon slice shape - Rotated -35 degrees around center -->
-  <g filter="url(#shadow)" transform="rotate(-35 24 24)">
+  <!-- Main watermelon slice shape - Rotated -30 degrees (standard cursor angle) -->
+  <g filter="url(#shadow)" transform="rotate(-30 24 24)">
     <!-- Outer green rind -->
     <path class="rind-outer" d="M 24 4 L 40 36 Q 38 42, 32 44 L 16 44 Q 10 42, 8 36 Z"/>
     
@@ -36,7 +36,7 @@
   </g>
   
   <!-- Highlight for 3D effect -->
-  <g transform="rotate(-35 24 24)">
+  <g transform="rotate(-30 24 24)">
     <path fill="white" opacity="0.3" d="M 24 16 L 28 26 L 24 22 Z"/>
   </g>
 </svg>
