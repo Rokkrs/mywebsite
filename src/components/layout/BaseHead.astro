@@ -39,7 +39,12 @@ const { title, description, ogImage } = Astro.props;
   <meta property='twitter:image' content={ogImage} />
 
   <link rel='canonical' href={canonicalURL} />
-  <link rel='icon' type='image/svg' href='/favicon.svg' />
+  
+  <!-- Favicons -->
+  <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+  <link rel='apple-touch-icon' sizes='180x180' href='/favicon.svg' />
+  <link rel='manifest' href='/site.webmanifest' />
+  <meta name='theme-color' content='#043915' />
 
   <title>{title}</title>
 

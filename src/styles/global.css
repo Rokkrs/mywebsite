@@ -17,10 +17,13 @@
   /* Base Tokens */
   --sys-color-white: #FFFFFF;
   --sys-color-black: #000000;
+  --sys-color-green: #043915;
 
   /* Theme Tokens */
   --primary: var(--sys-color-white);
   --secondary: var(--sys-color-black);
+  --accent-green: var(--sys-color-green);
+  --bg-primary: var(--sys-color-green);
 }
 
 html {

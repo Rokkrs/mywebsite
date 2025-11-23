@@ -1,13 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
-  <path fill="#000" d="M22.25 4h-8.5a1 1 0 0 0-.96.73l-5.54 19.4a.5.5 0 0 0 .62.62l5.05-1.44a2 2 0 0 0 1.38-1.4l3.22-11.66a.5.5 0 0 1 .96 0l3.22 11.67a2 2 0 0 0 1.38 1.39l5.05 1.44a.5.5 0 0 0 .62-.62l-5.54-19.4a1 1 0 0 0-.96-.73Z"/>
-  <path fill="url(#gradient)" d="M18 28a7.63 7.63 0 0 1-5-2c-1.4 2.1-.35 4.35.6 5.55.14.17.41.07.47-.15.44-1.8 2.93-1.22 2.93.6 0 2.28.87 3.4 1.72 3.81.34.16.59-.2.49-.56-.31-1.05-.29-2.46 1.29-3.25 3-1.5 3.17-4.83 2.5-6-.67.67-2.6 2-5 2Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Tree icon optimized for favicon -->
   <defs>
-    <linearGradient id="gradient" x1="16" x2="16" y1="32" y2="24" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#000"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0"/>
-    </linearGradient>
+    <style>
+      .tree-trunk { fill: #8B4513; stroke: #1a1a1a; stroke-width: 12; }
+      .tree-foliage { fill: #22c55e; stroke: #1a1a1a; stroke-width: 12; }
+      .tree-shadow { fill: #16a34a; opacity: 0.6; }
+    </style>
   </defs>
-	<style>
-    @media (prefers-color-scheme:dark){:root{filter:invert(100%)}}
-  </style>
+  
+  <!-- Tree trunk -->
+  <path class="tree-trunk" d="M 220 280 L 220 480 Q 220 490 230 490 L 282 490 Q 292 490 292 480 L 292 280 Z"/>
+  
+  <!-- Tree foliage shadow -->
+  <ellipse class="tree-shadow" cx="280" cy="200" rx="140" ry="150"/>
+  
+  <!-- Tree foliage -->
+  <path class="tree-foliage" d="
+    M 256 40
+    Q 200 60, 160 100
+    Q 120 140, 110 190
+    Q 100 240, 130 280
+    Q 160 320, 200 330
+    L 200 270
+    Q 180 260, 170 240
+    Q 160 220, 165 200
+    Q 170 180, 190 170
+    Q 200 100, 256 60
+    Q 312 100, 322 170
+    Q 342 180, 347 200
+    Q 352 220, 342 240
+    Q 332 260, 312 270
+    L 312 330
+    Q 352 320, 382 280
+    Q 412 240, 402 190
+    Q 392 140, 352 100
+    Q 312 60, 256 40
+    Z
+  "/>
+  
+  <!-- Tree highlights -->
+  <ellipse fill="#4ade80" opacity="0.4" cx="230" cy="150" rx="50" ry="60"/>
+  <ellipse fill="#4ade80" opacity="0.3" cx="290" cy="180" rx="40" ry="50"/>
 </svg>

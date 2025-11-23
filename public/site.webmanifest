@@ -1,0 +1,17 @@
+{
+  "name": "Oscar Cuadra - iOS Engineer",
+  "short_name": "Oscar Cuadra",
+  "description": "iOS Engineer specializing in Swift, SwiftUI, and native iOS development",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#043915",
+  "background_color": "#043915",
+  "display": "standalone",
+  "start_url": "/"
+}
+
