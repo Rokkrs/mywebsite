@@ -18,11 +18,5 @@ export default defineConfig({
     }),
     presetTypography(),
   ],
-  theme: {
-    colors: {
-      'primary-green': '#043915',
-      'dark-green': '#043915',
-    },
-  },
 });
 
