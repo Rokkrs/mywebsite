@@ -3,9 +3,6 @@ import Layout from '@layouts/Default.astro';
 import { Card } from '@eliancodes/brutal-ui';
 import { Button } from '@eliancodes/brutal-ui';
 import { Pill } from '@eliancodes/brutal-ui';
-import LinkedInBadge from '@components/generic/LinkedInBadge.astro';
-import GitHubActivity from '@components/generic/GitHubActivity.astro';
-import LinkedInActivity from '@components/generic/LinkedInActivity.astro';
 
 const skills = [
   { name: 'Swift', category: 'language' },
@@ -25,66 +22,65 @@ const projects = [
     description: 'A modern iOS app built with SwiftUI that helps users track their daily habits.',
     tech: ['SwiftUI', 'CoreData', 'Combine'],
     url: '#',
+    color: '#ffe01b',
   },
   {
     name: 'Project Two',
     description: 'Native iOS application featuring real-time data synchronization and offline support.',
     tech: ['UIKit', 'Firebase', 'CoreData'],
     url: '#',
+    color: '#ff7a1a',
   },
   {
     name: 'Project Three',
     description: 'E-commerce app with custom animations and seamless checkout experience.',
     tech: ['SwiftUI', 'REST APIs', 'Stripe'],
     url: '#',
+    color: '#28c7ff',
   },
-];
-
-// LinkedIn Featured Posts - Update these manually with your real posts
-const linkedInPosts = [
-  {
-    title: 'Building Native iOS Apps with SwiftUI',
-    excerpt: 'Sharing my experience transitioning from UIKit to SwiftUI and the benefits of declarative UI...',
-    date: 'November 2024',
-    url: 'https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/',
-    // image: '/path/to/post-image.jpg', // Optional: Add image path
-  },
-  {
-    title: 'iOS Development Best Practices',
-    excerpt: 'Key lessons learned from shipping production iOS applications...',
-    date: 'October 2024',
-    url: 'https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/',
-  },
-  // Add more posts as needed, or set to empty array [] to show the "Follow on LinkedIn" CTA
 ];
 ---
 
 <Layout
-  title='Oscar Cuadra Navarro - iOS Engineer'
-  pageTitle='iOS Engineer'
-  description='Software Engineer specializing in Swift, SwiftUI, and native iOS development.'
+  title='iOS Engineer Portfolio'
+  pageTitle='iOS Engineer | Home'
+  description='iOS Engineer specializing in Swift, SwiftUI, and native iOS development.'
 >
-  <main class='bg-[#043915]'>
+  <main class='site-background'>
     <!-- Hero Section -->
     <section id='hero' class='p-6 md:p-12'>
       <div class='max-w-7xl mx-auto'>
-        <Card>
-          <div class='flex flex-col items-start gap-6 p-4 md:p-8'>
-            <h1 class='outfit text-4xl md:text-6xl lg:text-8xl font-bold'>
-              Hi, I'm <span class='text-blue'>Oscar</span>
-            </h1>
-            <p class='poppins text-xl md:text-2xl lg:text-3xl max-w-3xl'>
-              iOS Engineer building beautiful, performant native iOS applications using Swift, SwiftUI, and UIKit.
-              Passionate about creating exceptional user experiences and coding.
-            </p>
-            <div class='flex gap-4 flex-wrap'>
-              <Button href='#projects'>
-                View My Work &rarr;
-              </Button>
-              <Button href='#contact'>
-                Get In Touch
-              </Button>
+        <Card color='#ffe01b'>
+          <div class='grid lg:grid-cols-[1fr_auto] items-center gap-8 p-4 md:p-8'>
+            <div class='flex flex-col items-start gap-6'>
+              <h1 class='hero-name-title outfit font-bold'>
+                <span class='hero-title-accent hero-name-text'>Oscar Cuadra Navarro</span>
+              </h1>
+              <p class='poppins text-xl md:text-2xl lg:text-3xl max-w-3xl'>
+                I build beautiful, performant native iOS applications using Swift, SwiftUI, and UIKit.
+                Passionate about creating exceptional user experiences.
+              </p>
+              <div class='flex gap-4 flex-wrap'>
+                <Button href='#projects'>
+                  View My Work &rarr;
+                </Button>
+                <Button href='#contact'>
+                  Get In Touch
+                </Button>
+              </div>
             </div>
+            <button
+              class='hero-profile-button'
+              type='button'
+              aria-label='Spin profile photo'
+            >
+              <img
+                src='/oscar-profile.jpeg'
+                alt='Oscar Cuadra Navarro'
+                class='hero-profile-image'
+                loading='eager'
+              />
+            </button>
           </div>
         </Card>
       </div>
@@ -93,42 +89,70 @@ const linkedInPosts = [
     <!-- About Section -->
     <section id='about' class='p-6 md:p-12'>
       <div class='max-w-7xl mx-auto grid md:grid-cols-2 gap-8'>
-        <Card>
-          <h2 class='text-3xl md:text-5xl lg:text-6xl mb-6 dm-serif'>
-            About Me
-          </h2>
-          <p class='poppins text-lg mb-4'>
-            I'm a passionate iOS Engineer.
-          </p>
-          <p class='poppins text-lg'>
-            With years of experience in Swift and the iOS ecosystem, I've shipped
-            multiple apps to the App Store and helped teams deliver high-quality
-            mobile solutions.
-          </p>
+        <Card color='#8FCE00'>
+          <div class='p-2 md:p-4'>
+            <p class='section-kicker'>Profile</p>
+            <h2 class='text-3xl md:text-5xl lg:text-6xl mb-6 dm-serif'>
+              About Me
+            </h2>
+            <p class='poppins text-lg md:text-xl mb-6 max-w-xl'>
+              I'm Oscar, an iOS engineer focused on building polished native experiences
+              with Swift, SwiftUI and UIKit. I care about clean architecture, smooth
+              interactions and product details that make apps feel reliable.
+            </p>
+            <div class='grid sm:grid-cols-3 gap-3'>
+              <div class='mini-stat'>
+                <span class='mini-stat-value'>3+</span>
+                <span class='mini-stat-label'>Years iOS</span>
+              </div>
+              <div class='mini-stat'>
+                <span class='mini-stat-value'>UIKit</span>
+                <span class='mini-stat-label'>Production UI</span>
+              </div>
+              <div class='mini-stat'>
+                <span class='mini-stat-value'>SwiftUI</span>
+                <span class='mini-stat-label'>Modern screens</span>
+              </div>
+            </div>
+          </div>
         </Card>
 
-        <Card>
-          <h2 class='text-3xl md:text-5xl lg:text-6xl mb-6 dm-serif'>
-            What I Do
-          </h2>
-          <ul class='poppins text-lg space-y-3'>
-            <li class='flex items-start'>
-              <span class='text-2xl mr-3'>📱</span>
-              <span>Native iOS app development with Swift</span>
-            </li>
-            <li class='flex items-start'>
-              <span class='text-2xl mr-3'>🎨</span>
-              <span>Modern UI/UX with SwiftUI and UIKit</span>
-            </li>
-            <li class='flex items-start'>
-              <span class='text-2xl mr-3'>⚡</span>
-              <span>Performance optimization and debugging</span>
-            </li>
-            <li class='flex items-start'>
-              <span class='text-2xl mr-3'>🔄</span>
-              <span>App Store deployment and CI/CD</span>
-            </li>
-          </ul>
+        <Card color='#ff7a1a'>
+          <div class='p-2 md:p-4'>
+            <p class='section-kicker'>Craft</p>
+            <h2 class='text-3xl md:text-5xl lg:text-6xl mb-6 dm-serif'>
+              What I Do
+            </h2>
+            <div class='space-y-4'>
+              <article class='capability-row'>
+                <span class='capability-icon i-uil-mobile-android'></span>
+                <div>
+                  <h3 class='outfit text-2xl font-bold'>Native iOS</h3>
+                  <p class='poppins text-base md:text-lg'>
+                    Swift apps built with maintainable architecture and production-quality UI.
+                  </p>
+                </div>
+              </article>
+              <article class='capability-row'>
+                <span class='capability-icon i-uil-brush-alt'></span>
+                <div>
+                  <h3 class='outfit text-2xl font-bold'>Product UI</h3>
+                  <p class='poppins text-base md:text-lg'>
+                    UIKit and SwiftUI screens with attention to flows, states and visual polish.
+                  </p>
+                </div>
+              </article>
+              <article class='capability-row'>
+                <span class='capability-icon i-uil-tachometer-fast'></span>
+                <div>
+                  <h3 class='outfit text-2xl font-bold'>Quality & Performance</h3>
+                  <p class='poppins text-base md:text-lg'>
+                    Debugging, profiling and delivery workflows for apps that need to stay sharp.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
         </Card>
       </div>
     </section>
@@ -136,7 +160,7 @@ const linkedInPosts = [
     <!-- Skills Section -->
     <section id='skills' class='p-6 md:p-12'>
       <div class='max-w-7xl mx-auto'>
-        <Card>
+        <Card color='#28c7ff'>
           <h2 class='text-3xl md:text-5xl lg:text-6xl mb-8 dm-serif'>
             Skills & Technologies
           </h2>
@@ -162,7 +186,7 @@ const linkedInPosts = [
         <div class='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
           {
             projects.map((project) => (
-              <Card>
+              <Card color={project.color}>
                 <div class='flex flex-col h-full p-4'>
                   <h3 class='text-2xl md:text-3xl lg:text-4xl mb-4 outfit font-bold'>
                     {project.name}
@@ -188,59 +212,23 @@ const linkedInPosts = [
       </div>
     </section>
 
-    <!-- LinkedIn Activity Section -->
-    <section id='linkedin-activity' class='p-6 md:p-12'>
-      <div class='max-w-7xl mx-auto'>
-        <h2 class='text-4xl md:text-6xl lg:text-7xl mb-8 dm-serif text-center'>
-          LinkedIn Profile & Activity
-        </h2>
-        <Card>
-          <div class='p-4'>
-            <LinkedInActivity featuredPosts={linkedInPosts} />
-          </div>
-        </Card>
-      </div>
-    </section>
-
-    <!-- GitHub Activity Section -->
-    <section id='github-activity' class='p-6 md:p-12'>
-      <div class='max-w-7xl mx-auto'>
-        <h2 class='text-4xl md:text-6xl lg:text-7xl mb-8 dm-serif text-center'>
-          GitHub Activity
-        </h2>
-        <Card>
-          <div class='p-4'>
-            <GitHubActivity username='Rokkrs' />
-          </div>
-        </Card>
-      </div>
-    </section>
-
-    <!-- LinkedIn & Contact Section -->
+    <!-- Contact Section -->
     <section id='contact' class='p-6 md:p-12'>
-      <div class='max-w-7xl mx-auto grid md:grid-cols-2 gap-8'>
-        <!-- LinkedIn Badge -->
-        <Card>
-          <div class='p-8'>
-            <h2 class='text-3xl md:text-5xl mb-6 dm-serif text-center'>
-              Connect on LinkedIn
-            </h2>
-            <LinkedInBadge />
-          </div>
-        </Card>
-
-        <!-- Contact -->
-        <Card>
-          <div class='p-8'>
-            <h2 class='text-3xl md:text-5xl mb-6 dm-serif text-center'>
+      <div class='max-w-4xl mx-auto'>
+        <Card color='#ee4cff'>
+          <div class='text-center p-8'>
+            <h2 class='text-4xl md:text-6xl lg:text-7xl mb-6 dm-serif'>
               Let's Work Together
             </h2>
-            <p class='poppins text-lg mb-8'>
+            <p class='poppins text-lg md:text-xl mb-8 max-w-2xl mx-auto'>
               I'm always interested in hearing about new projects and opportunities.
               Whether you have a question or just want to say hi, feel free to reach out!
             </p>
-            <div class='flex gap-4 flex-wrap'>
-              <Button href='https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/' target='_blank'>
+            <div class='flex gap-4 justify-center flex-wrap'>
+              <Button href='https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/?locale=en' target='_blank'>
+                Contact on LinkedIn
+              </Button>
+              <Button href='https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/?locale=en' target='_blank'>
                 LinkedIn
               </Button>
               <Button href='https://github.com/Rokkrs' target='_blank'>
@@ -254,3 +242,19 @@ const linkedInPosts = [
   </main>
 </Layout>
 
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const profileButton = document.querySelector('.hero-profile-button');
+
+    profileButton?.addEventListener('click', () => {
+      profileButton.classList.remove('is-spinning');
+      window.requestAnimationFrame(() => {
+        profileButton.classList.add('is-spinning');
+      });
+    });
+
+    profileButton?.addEventListener('animationend', () => {
+      profileButton.classList.remove('is-spinning');
+    });
+  });
+</script>

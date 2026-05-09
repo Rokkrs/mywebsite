@@ -5,10 +5,9 @@ interface Props {
 
 const navigationItems = [
   { name: 'Home', url: '/' },
-  { name: 'Blog', url: '/blog' },
-  { name: 'Projects', url: '/#projects' },
-  { name: 'Skills', url: '/#skills' },
-  { name: 'Contact', url: '/#contact' },
+  { name: 'Projects', url: '#projects' },
+  { name: 'Skills', url: '#skills' },
+  { name: 'Contact', url: '#contact' },
 ];
 
 const socialIcons = [
@@ -19,7 +18,7 @@ const socialIcons = [
   },
   {
     name: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/',
+    url: 'https://www.linkedin.com/in/oscar-cuadra-navarro-4bbb5743/?locale=en',
     icon: 'i-uil-linkedin',
   },
 ];
@@ -30,7 +29,7 @@ const { pageTitle } = Astro.props;
 <header class='border-b-4 border-black flex justify-between p-6 items-center bg-white'>
   {pageTitle && <h1 class='hidden'>{pageTitle}</h1>}
   <a href='/' title='Back to Home'>
-    <p class='righteous text-2xl md:text-4xl'>iOS Engineer | Oscar Cuadra Navarro </p>
+    <p class='righteous text-2xl md:text-4xl'>iOS Engineer</p>
   </a>
   <nav class='hidden md:inline-block'>
     <h2 class='hidden'>Navigation</h2>
@@ -64,10 +63,9 @@ const { pageTitle } = Astro.props;
       }
     </ul>
   </nav>
-  <nav class='md:hidden flex gap-4 items-center'>
+  <nav class='md:hidden flex gap-4'>
     <h2 class='hidden'>Mobile Navigation</h2>
-    <ul class='flex gap-4 items-center'>
-      <li><a href='/blog' class='poppins font-medium'>Blog</a></li>
+    <ul class='flex gap-4'>
       {
         socialIcons.map((item) => (
           <li>
@@ -80,4 +78,3 @@ const { pageTitle } = Astro.props;
     </ul>
   </nav>
 </header>
-
