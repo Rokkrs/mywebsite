@@ -18,24 +18,36 @@ const skills = [
 
 const projects = [
   {
-    name: 'Project One',
-    description: 'A modern iOS app built with SwiftUI that helps users track their daily habits.',
-    tech: ['SwiftUI', 'CoreData', 'Combine'],
-    url: '#',
+    name: 'Expedia Group - Vrbo Owner',
+    companyLogo: 'Expedia Group',
+    logoClass: 'project-logo-expedia',
+    logoIcon: 'expedia',
+    role: 'iOS Engineer',
+    description: 'Contributing to a global owner-facing iOS product at Expedia Group, building SwiftUI experiences and integrating GraphQL, RESTful services, Firebase and observability tooling to support reliable delivery for users worldwide.',
+    tech: ['SwiftUI', 'GraphQL', 'RESTful APIs', 'Firebase', 'Splunk', 'DataDog'],
+    image: '/vrbo-owner-preview.png',
     color: '#ffe01b',
   },
   {
-    name: 'Project Two',
-    description: 'Native iOS application featuring real-time data synchronization and offline support.',
-    tech: ['UIKit', 'Firebase', 'CoreData'],
-    url: '#',
+    name: 'Banco Falabella',
+    companyLogo: 'Banco Falabella',
+    logoClass: 'project-logo-falabella',
+    logoIcon: 'falabella',
+    role: 'Full Stack Developer',
+    description: 'Contributed to a large-scale banking modernization effort, migrating legacy Java servlet workflows into a more maintainable Angular 10 and Node.js platform backed by Oracle services, with ownership across delivery, maintenance and deployments.',
+    tech: ['Angular 10', 'Node.js', 'Java Servlets', 'Oracle', 'Deployments'],
+    image: '/falabella-preview.jpg',
     color: '#ff7a1a',
   },
   {
-    name: 'Project Three',
-    description: 'E-commerce app with custom animations and seamless checkout experience.',
-    tech: ['SwiftUI', 'REST APIs', 'Stripe'],
-    url: '#',
+    name: 'LATAM Airlines',
+    companyLogo: 'LATAM Airlines',
+    logoClass: 'project-logo-latam',
+    logoIcon: 'latam',
+    role: 'Full Stack Java Developer',
+    description: 'Delivered multiple airline technology initiatives from concept to production, designing and implementing Java services and data-driven systems with Spring, JPA, Oracle, MySQL and Docker in a high-availability enterprise environment.',
+    tech: ['Java', 'Spring', 'JPA', 'Oracle', 'MySQL', 'Docker'],
+    image: '/latam-preview.jpg',
     color: '#28c7ff',
   },
 ];
@@ -54,11 +66,12 @@ const projects = [
           <div class='grid lg:grid-cols-[1fr_auto] items-center gap-8 p-4 md:p-8'>
             <div class='flex flex-col items-start gap-6'>
               <h1 class='hero-name-title outfit font-bold'>
-                <span class='hero-title-accent hero-name-text'>Oscar Cuadra Navarro</span>
+                <span class='hero-title-accent hero-name-text'>iOS Engineer</span>
               </h1>
               <p class='poppins text-xl md:text-2xl lg:text-3xl max-w-3xl'>
-                I build beautiful, performant native iOS applications using Swift, SwiftUI, and UIKit.
-                Passionate about creating exceptional user experiences.
+                Beyond building polished and high-quality apps,
+                I'm passionate about creating user experiences in close collaboration with Product Owners,
+                designing and delivering solutions for users worldwide.
               </p>
               <div class='flex gap-4 flex-wrap'>
                 <Button href='#projects'>
@@ -96,18 +109,18 @@ const projects = [
               About Me
             </h2>
             <p class='poppins text-lg md:text-xl mb-6 max-w-xl'>
-              I'm Oscar, an iOS engineer focused on building polished native experiences
-              with Swift, SwiftUI and UIKit. I care about clean architecture, smooth
-              interactions and product details that make apps feel reliable.
+Hello, I'm Oscar, a Software Engineer from Chile with over 10 years of experience leading the design and development of scalable digital products, currently specialized in iOS development.
+Throughout my career, I have contributed to large-scale applications, modernization initiatives, and engineering efforts focused on performance, scalability, and user experience.
+This site is a space where I share technical research, engineering insights, and ideas around software development. Feel free to get in touch.
             </p>
             <div class='grid sm:grid-cols-3 gap-3'>
               <div class='mini-stat'>
-                <span class='mini-stat-value'>3+</span>
+                <span class='mini-stat-value'>4+</span>
                 <span class='mini-stat-label'>Years iOS</span>
               </div>
               <div class='mini-stat'>
-                <span class='mini-stat-value'>UIKit</span>
-                <span class='mini-stat-label'>Production UI</span>
+                <span class='mini-stat-value'>Swift</span>
+                <span class='mini-stat-label'>Production Code</span>
               </div>
               <div class='mini-stat'>
                 <span class='mini-stat-value'>SwiftUI</span>
@@ -127,27 +140,27 @@ const projects = [
               <article class='capability-row'>
                 <span class='capability-icon i-uil-mobile-android'></span>
                 <div>
-                  <h3 class='outfit text-2xl font-bold'>Native iOS</h3>
+                  <h3 class='outfit text-2xl font-bold'>Product Engineering mindset</h3>
                   <p class='poppins text-base md:text-lg'>
-                    Swift apps built with maintainable architecture and production-quality UI.
+                    Collaborating across engineering and product teams to build experiences used by users worldwide.
                   </p>
                 </div>
               </article>
               <article class='capability-row'>
                 <span class='capability-icon i-uil-brush-alt'></span>
                 <div>
-                  <h3 class='outfit text-2xl font-bold'>Product UI</h3>
+                  <h3 class='outfit text-2xl font-bold'>Scalable architecture & systems thinking</h3>
                   <p class='poppins text-base md:text-lg'>
-                    UIKit and SwiftUI screens with attention to flows, states and visual polish.
+                    Designing maintainable mobile systems and scalable architectures for production environments.
                   </p>
                 </div>
               </article>
               <article class='capability-row'>
                 <span class='capability-icon i-uil-tachometer-fast'></span>
                 <div>
-                  <h3 class='outfit text-2xl font-bold'>Quality & Performance</h3>
+                  <h3 class='outfit text-2xl font-bold'>Engineering Innovation</h3>
                   <p class='poppins text-base md:text-lg'>
-                    Debugging, profiling and delivery workflows for apps that need to stay sharp.
+                    Exploring modern technologies, AI-driven workflows, performance optimization, and platform evolution.
                   </p>
                 </div>
               </article>
@@ -187,7 +200,21 @@ const projects = [
           {
             projects.map((project) => (
               <Card color={project.color}>
-                <div class='flex flex-col h-full p-4'>
+                <div class='project-card-content'>
+                  <div class:list={['project-company-logo', project.logoClass]}>
+                    <span class:list={['project-logo-mark', `project-logo-mark-${project.logoIcon}`]}></span>
+                    <span>{project.companyLogo}</span>
+                  </div>
+                  {project.image && (
+                    <img
+                      src={project.image}
+                      alt={`${project.name} app screens`}
+                      class='project-card-image'
+                      loading='lazy'
+                      onerror='this.remove()'
+                    />
+                  )}
+                  <p class='project-role'>{project.role}</p>
                   <h3 class='text-2xl md:text-3xl lg:text-4xl mb-4 outfit font-bold'>
                     {project.name}
                   </h3>
@@ -201,9 +228,6 @@ const projects = [
                       </Pill>
                     ))}
                   </div>
-                  <Button href={project.url} target='_blank'>
-                    View Project &rarr;
-                  </Button>
                 </div>
               </Card>
             ))
