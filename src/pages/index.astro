@@ -8,12 +8,45 @@ const skills = [
   { name: 'Swift', category: 'language' },
   { name: 'SwiftUI', category: 'framework' },
   { name: 'UIKit', category: 'framework' },
+  { name: 'UIKit to SwiftUI migrations', category: 'architecture' },
   { name: 'Combine', category: 'framework' },
   { name: 'CoreData', category: 'framework' },
+  { name: 'GraphQL/Apollo', category: 'backend' },
+  { name: 'Architecture', category: 'architecture' },
+  { name: 'Observability', category: 'platform' },
+  { name: 'AI Agents', category: 'ai' },
+  { name: 'AI-assisted development', category: 'ai' },
+  { name: 'Technical presentations', category: 'leadership' },
+  { name: 'Cross-team initiatives', category: 'leadership' },
+  { name: 'Product/UX thinking', category: 'product' },
   { name: 'Git', category: 'tool' },
   { name: 'Xcode', category: 'tool' },
+  { name: 'Codex', category: 'tool' },
+  { name: 'Cursor', category: 'tool' },
+  { name: 'Claude', category: 'tool' },
   { name: 'REST APIs', category: 'backend' },
   { name: 'Firebase', category: 'backend' },
+];
+
+const focusAreas = [
+  {
+    title: 'Mobile systems modernization',
+    description:
+      'Migrating UIKit surfaces into SwiftUI, improving architecture, and keeping production apps maintainable while teams continue shipping.',
+    icon: 'i-uil-mobile-android',
+  },
+  {
+    title: 'AI-assisted engineering',
+    description:
+      'Experimenting with coding agents, Claude, Cursor and Codex to turn specs, product context and developer intent into safer implementation loops.',
+    icon: 'i-uil-robot',
+  },
+  {
+    title: 'Product-aware execution',
+    description:
+      'Connecting technical choices with user experience, observability, cross-team collaboration and clear technical storytelling.',
+    icon: 'i-uil-analysis',
+  },
 ];
 
 const projects = [
@@ -56,7 +89,7 @@ const projects = [
 <Layout
   title='iOS Engineer Portfolio'
   pageTitle='iOS Engineer | Home'
-  description='iOS Engineer specializing in Swift, SwiftUI, and native iOS development.'
+  description='iOS Engineer specializing in Swift, SwiftUI, AI-assisted development, mobile architecture, and product engineering.'
 >
   <main class='site-background'>
     <!-- Hero Section -->
@@ -69,9 +102,10 @@ const projects = [
                 <span class='hero-title-accent hero-name-text'>iOS Engineer</span>
               </h1>
               <p class='poppins text-xl md:text-2xl lg:text-3xl max-w-3xl'>
-                Beyond building polished and high-quality apps,
-                I'm passionate about creating user experiences in close collaboration with Product Owners,
-                designing and delivering solutions for users worldwide.
+                I build native iOS products at the intersection of mobile engineering,
+                AI-assisted development, architecture and product thinking.
+                My work blends Swift, SwiftUI, GraphQL, observability, tooling and
+                human-in-the-loop agent experimentation.
               </p>
               <div class='flex gap-4 flex-wrap'>
                 <Button href='#projects'>
@@ -109,9 +143,9 @@ const projects = [
               About Me
             </h2>
             <p class='poppins text-lg md:text-xl mb-6 max-w-xl'>
-Hello, I'm Oscar, a Software Engineer from Chile with over 10 years of experience leading the design and development of scalable digital products, currently specialized in iOS development.
-Throughout my career, I have contributed to large-scale applications, modernization initiatives, and engineering efforts focused on performance, scalability, and user experience.
-This site is a space where I share technical research, engineering insights, and ideas around software development. Feel free to get in touch.
+Hello, I'm Oscar, a Software Engineer from Chile with over 10 years of experience building scalable digital products, currently focused on iOS engineering.
+I work on production mobile systems, UIKit to SwiftUI modernization, GraphQL/Apollo integrations, observability, architecture, and tooling that helps teams move with more confidence.
+I am especially interested in the new shape of engineering work: how strong developers use AI agents, specifications, product context and human judgment to build better software.
             </p>
             <div class='grid sm:grid-cols-3 gap-3'>
               <div class='mini-stat'>
@@ -119,12 +153,12 @@ This site is a space where I share technical research, engineering insights, and
                 <span class='mini-stat-label'>Years iOS</span>
               </div>
               <div class='mini-stat'>
-                <span class='mini-stat-value'>Swift</span>
-                <span class='mini-stat-label'>Production Code</span>
+                <span class='mini-stat-value'>AI</span>
+                <span class='mini-stat-label'>Agent workflows</span>
               </div>
               <div class='mini-stat'>
-                <span class='mini-stat-value'>SwiftUI</span>
-                <span class='mini-stat-label'>Modern screens</span>
+                <span class='mini-stat-value'>UX</span>
+                <span class='mini-stat-label'>Product thinking</span>
               </div>
             </div>
           </div>
@@ -142,7 +176,7 @@ This site is a space where I share technical research, engineering insights, and
                 <div>
                   <h3 class='outfit text-2xl font-bold'>Product Engineering mindset</h3>
                   <p class='poppins text-base md:text-lg'>
-                    Collaborating across engineering and product teams to build experiences used by users worldwide.
+                    Collaborating across engineering, product and UX to translate user needs into durable mobile experiences.
                   </p>
                 </div>
               </article>
@@ -151,19 +185,51 @@ This site is a space where I share technical research, engineering insights, and
                 <div>
                   <h3 class='outfit text-2xl font-bold'>Scalable architecture & systems thinking</h3>
                   <p class='poppins text-base md:text-lg'>
-                    Designing maintainable mobile systems and scalable architectures for production environments.
+                    Designing maintainable iOS systems, guiding UIKit to SwiftUI migrations, and integrating GraphQL/Apollo, REST and observability in production.
                   </p>
                 </div>
               </article>
               <article class='capability-row'>
                 <span class='capability-icon i-uil-tachometer-fast'></span>
                 <div>
-                  <h3 class='outfit text-2xl font-bold'>Engineering Innovation</h3>
+                  <h3 class='outfit text-2xl font-bold'>AI-enabled engineering</h3>
                   <p class='poppins text-base md:text-lg'>
-                    Exploring modern technologies, AI-driven workflows, performance optimization, and platform evolution.
+                    Building with AI tools and coding agents as part of the development process, from specifications to implementation review.
                   </p>
                 </div>
               </article>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- Focus Section -->
+    <section id='focus' class='p-6 md:p-12'>
+      <div class='max-w-7xl mx-auto'>
+        <Card color='#f9fd5c'>
+          <div class='p-2 md:p-4'>
+            <p class='section-kicker'>Current Edge</p>
+            <div class='focus-heading-grid'>
+              <h2 class='text-3xl md:text-5xl lg:text-6xl dm-serif'>
+                iOS + AI + Product Systems
+              </h2>
+              <p class='poppins text-lg md:text-xl'>
+                The strongest engineering work now goes beyond writing clean code.
+                I care about how teams use AI tools, agents, architecture and product judgment
+                to raise the quality and velocity of what they ship.
+              </p>
+            </div>
+            <div class='focus-grid'>
+              {
+                focusAreas.map((area) => (
+                  <article class='focus-card'>
+                    <span class:list={[area.icon, 'focus-card-icon']} />
+                    <h3 class='outfit text-2xl font-bold'>{area.title}</h3>
+                    <p class='poppins text-base md:text-lg'>{area.description}</p>
+                  </article>
+                ))
+              }
             </div>
           </div>
         </Card>
