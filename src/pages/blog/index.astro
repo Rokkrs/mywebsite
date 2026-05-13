@@ -1,0 +1,36 @@
+---
+import Layout from '@layouts/Default.astro';
+import { blogPosts } from '@data/blogPosts';
+---
+
+<Layout
+  title='iOS Engineering Blog | Oscar Cuadra Navarro'
+  pageTitle='iOS Engineering Blog'
+  description='Original iOS engineering notes on Swift, SwiftUI, performance, architecture and production quality.'
+>
+  <main class='blog-page-background'>
+
+    <section class='blog-index-list' aria-label='Blog posts'>
+      {
+        blogPosts.map((post) => (
+          <article class='medium-post-row'>
+            <a href={`/blog/${post.slug}`} class='medium-post-link'>
+              <div>
+                <p class='medium-post-meta'>
+                  {post.source} · {post.readTime}
+                </p>
+                <h2>{post.title}</h2>
+                <p>{post.excerpt}</p>
+                <div class='medium-tag-row'>
+                  {post.tags.map((tag) => (
+                    <span>{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+</Layout>

@@ -1,0 +1,56 @@
+---
+import Layout from '@layouts/Default.astro';
+import { blogPosts, type BlogPost } from '@data/blogPosts';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+---
+
+<Layout
+  title={`${post.title} | Oscar Cuadra Navarro`}
+  pageTitle={post.title}
+  description={post.excerpt}
+>
+  <main class='blog-page-background'>
+    <article class='medium-article'>
+      <a href='/blog' class='medium-back-link'>&larr; All posts</a>
+
+      <header class='medium-article-header'>
+        <p class='medium-post-meta'>
+          {post.source} · {post.readTime} · {post.date}
+        </p>
+        <h1>{post.title}</h1>
+        <p>{post.excerpt}</p>
+        <div class='medium-tag-row'>
+          {post.tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      </header>
+
+      <div class='medium-article-body'>
+        {
+          post.sections.map((section) => (
+            <section>
+              <h2>{section.heading}</h2>
+              <p>{section.body}</p>
+              {'code' in section && section.code && (
+                <pre><code>{section.code}</code></pre>
+              )}
+            </section>
+          ))
+        }
+      </div>
+    </article>
+  </main>
+</Layout>
