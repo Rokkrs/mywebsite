@@ -5,7 +5,7 @@ export const blogPosts = [
     source: 'Swift Concurrency note',
     date: '2026-05-09',
     readTime: '5 min read',
-    color: '#35c7ff',
+    color: '#c8ead5',
     tags: ['Swift', 'Concurrency', 'AsyncSequence'],
     excerpt:
       'How AsyncSequence works, when to use it, and why notifications, streams and UI events become easier to reason about with for await.',
@@ -115,7 +115,7 @@ func downloadEvents() -> AsyncStream<DownloadEvent> {
     source: 'SwiftUI tutorial',
     date: '2026-05-09',
     readTime: '6 min read',
-    color: '#ffe01b',
+    color: '#d1e9c6',
     tags: ['SwiftUI', 'Architecture', 'State'],
     excerpt:
       'A practical walkthrough for replacing scattered booleans with one explicit state model that a real screen can render safely.',
@@ -176,7 +176,7 @@ func downloadEvents() -> AsyncStream<DownloadEvent> {
     source: 'Book opinion',
     date: '2026-05-09',
     readTime: '5 min read',
-    color: '#ff7a1a',
+    color: '#f2e6bc',
     tags: ['Books', 'API Design', 'Architecture'],
     excerpt:
       "A mobile engineer perspective on why John Ousterhout's book is useful, where it is strongest, and how I apply it in Swift code.",
@@ -217,7 +217,7 @@ func downloadEvents() -> AsyncStream<DownloadEvent> {
     source: 'Swift performance tutorial',
     date: '2026-05-09',
     readTime: '6 min read',
-    color: '#28c7ff',
+    color: '#bfded2',
     tags: ['Swift', 'Performance', 'Memory'],
     excerpt:
       'A small diagnostic flow for investigating memory pressure before jumping into premature optimization.',
@@ -269,7 +269,7 @@ func downloadEvents() -> AsyncStream<DownloadEvent> {
     source: 'Production iOS tutorial',
     date: '2026-05-09',
     readTime: '6 min read',
-    color: '#ee4cff',
+    color: '#cfe1bf',
     tags: ['iOS', 'Observability', 'Reliability'],
     excerpt:
       'A lightweight instrumentation plan for designing logs, metrics and user-journey signals before release.',
@@ -314,7 +314,7 @@ func downloadEvents() -> AsyncStream<DownloadEvent> {
     source: 'Product engineering guide',
     date: '2026-05-09',
     readTime: '5 min read',
-    color: '#9fffd1',
+    color: '#e1f1db',
     tags: ['SwiftUI', 'UX', 'Product'],
     excerpt:
       'A product-engineering checklist for the small interaction details that make a native screen feel intentional.',
