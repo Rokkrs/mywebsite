@@ -18,7 +18,8 @@
   --sys-color-black: #111513;
   --color-ink: #111513;
   --color-ink-soft: #25342d;
-  --color-page: #dce9dd;
+  --color-page: #f1f3f1;
+  --color-page-soft: #f7f8f6;
   --color-surface: #fbfff9;
   --color-surface-muted: #edf5ed;
   --color-accent: #176b4d;
@@ -81,7 +82,7 @@ a {
 
 .site-background {
   background:
-    linear-gradient(180deg, var(--color-page) 0%, var(--color-green-mist) 46%, var(--color-page) 100%);
+    linear-gradient(180deg, var(--color-page-soft) 0%, var(--color-page) 48%, var(--color-page-soft) 100%);
 }
 
 .site-header {
