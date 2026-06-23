@@ -10,16 +10,17 @@ export type VeraBirthdayTranslation = {
 };
 
 export const languageLabels: Record<VeraLanguage, string> = {
-  es: 'ES',
-  ru: 'RU',
-  en: 'EN',
+  es: '🇪🇸 ES',
+  ru: '🇷🇺 RU',
+  en: '🇬🇧 EN',
 };
 
 const poemScenesEs: VeraScene[] = [
   {
     title: '',
     body: [
-      'Hola Vera, aquí Oscar, me gustaría compartir este poema contigo',
+      'Hola Vera, mucho gusto, aquí Oscar, me gustaría compartir este poema contigo',
+      '✦',
       '(CON ALAS Y FLECHAS)',
       'Federico García Lorca',
     ],
@@ -59,7 +60,7 @@ const poemScenesEs: VeraScene[] = [
       'Ahora entre los dos',
       'se alarga impasible,',
       'un mes, como un',
-      'biombo de dias grises.',
+      'biombo de días grises.',
     ],
   },
   {
@@ -68,13 +69,14 @@ const poemScenesEs: VeraScene[] = [
       'La primera vez',
       'no te conocí.',
       'La segunda, sí.',
+      '✦',
     ],
   },
   {
     title: '',
     body: [
-      'Que hoy en tu día sientas esa enorme energía,',
-      'la fuerza vital para hacer de tus sueños una verdad.',
+      'Deseo que hoy en tu día sientas esa enorme energía',
+      'la grandiosa fuerza vital para hacer de tus sueños una verdad.',
     ],
   },
   {
@@ -87,7 +89,8 @@ const poemScenesRu: VeraScene[] = [
   {
     title: '',
     body: [
-      'Привет, Вера, это Оскар. Я хотел бы поделиться с тобой этим стихотворением',
+      'Привет, Вера, очень приятно, это Оскар. Я хотел бы поделиться с тобой этим стихотворением',
+      '✦',
       '(С КРЫЛЬЯМИ И СТРЕЛАМИ)',
       'Федерико Гарсия Лорка',
     ],
@@ -136,13 +139,14 @@ const poemScenesRu: VeraScene[] = [
       'В первый раз',
       'я тебя не узнал.',
       'Во второй — да.',
+      '✦',
     ],
   },
   {
     title: '',
     body: [
-      'Пусть сегодня, в твой день, ты почувствуешь эту огромную энергию,',
-      'жизненную силу, чтобы сделать свои мечты правдой.',
+      'Желаю, чтобы сегодня, в твой день, ты почувствовала эту огромную энергию',
+      'великую жизненную силу, чтобы превратить свои мечты в реальность.',
     ],
   },
   {
@@ -155,7 +159,8 @@ const poemScenesEn: VeraScene[] = [
   {
     title: '',
     body: [
-      'Hi Vera, Oscar here. I would like to share this poem with you',
+      'Hi Vera, nice to meet you, Oscar here. I would like to share this poem with you',
+      '✦',
       '(WITH WINGS AND ARROWS)',
       'Federico García Lorca',
     ],
@@ -204,13 +209,14 @@ const poemScenesEn: VeraScene[] = [
       'The first time',
       'I did not know you.',
       'The second, yes.',
+      '✦',
     ],
   },
   {
     title: '',
     body: [
-      'May today, on your day, you feel that enormous energy,',
-      'the vital force to make your dreams become true.',
+      'I wish that today, on your day, you feel that enormous energy',
+      'the grand vital force to make your dreams become true.',
     ],
   },
   {

@@ -282,6 +282,14 @@ export default function VeraStoryClient() {
         stagger: 0.01,
         duration: 0.9,
       }, 0.35);
+
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+        const progress = timeline.scrollTrigger?.progress ?? 0;
+        root.style.setProperty('--scroll-progress', progress.toFixed(4));
+        updateScene(progress);
+        updatePoemItems(progress);
+      });
       }, root);
 
       cleanup = () => context.revert();
@@ -291,7 +299,7 @@ export default function VeraStoryClient() {
       isMounted = false;
       cleanup?.();
     };
-  }, [switchTrack, updateScene]);
+  }, [language, switchTrack, updateScene]);
 
   return (
     <main className="vera-story" ref={rootRef}>
