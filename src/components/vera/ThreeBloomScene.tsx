@@ -37,6 +37,7 @@ type ButterflyRig = {
   phase: number;
   speed: number;
   size: number;
+  initialPresence: number;
 };
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
@@ -176,6 +177,7 @@ function createButterfly(
   base: Three.Vector3,
   size: number,
   phase: number,
+  initialPresence = 0,
 ): ButterflyRig {
   const group = new three.Group();
   const material = new three.MeshBasicMaterial({
@@ -222,6 +224,7 @@ function createButterfly(
     phase,
     speed: 0.014 + (phase % 5) * 0.002,
     size,
+    initialPresence,
   };
 }
 
@@ -430,15 +433,15 @@ export default function ThreeBloomScene() {
       const butterflyBodyGeometry = new three.CapsuleGeometry(0.03, 0.16, 4, 8);
       const butterflyColors = ['#74c7ff', '#5aaeff', '#ffe781', '#ffd84a', '#fffaf0', '#ffffff'];
       const butterflyRigs = [
-        { x: -1.35, y: 0.62, z: 0.6, s: 0.42, p: 0.5 },
-        { x: 1.55, y: 1.08, z: 0.2, s: 0.34, p: 1.8 },
-        { x: 2.78, y: 1.68, z: -0.5, s: 0.3, p: 2.7 },
-        { x: -0.42, y: 1.58, z: -0.1, s: 0.28, p: 3.5 },
-        { x: 0.82, y: 0.32, z: 0.8, s: 0.36, p: 4.2 },
-        { x: 3.12, y: 0.78, z: -0.2, s: 0.26, p: 5.1 },
-        { x: -2.2, y: 1.18, z: -0.1, s: 0.32, p: 6.4 },
-        { x: 1.95, y: -0.25, z: 0.7, s: 0.27, p: 7.3 },
-        { x: -0.9, y: -0.16, z: 0.9, s: 0.25, p: 8.6 },
+        { x: -1.35, y: 0.62, z: 0.6, s: 0.42, p: 0.5, i: 0.78 },
+        { x: 1.55, y: 1.08, z: 0.2, s: 0.34, p: 1.8, i: 0.58 },
+        { x: 2.78, y: 1.68, z: -0.5, s: 0.3, p: 2.7, i: 0 },
+        { x: -0.42, y: 1.58, z: -0.1, s: 0.28, p: 3.5, i: 0.44 },
+        { x: 0.82, y: 0.32, z: 0.8, s: 0.36, p: 4.2, i: 0 },
+        { x: 3.12, y: 0.78, z: -0.2, s: 0.26, p: 5.1, i: 0 },
+        { x: -2.2, y: 1.18, z: -0.1, s: 0.32, p: 6.4, i: 0.5 },
+        { x: 1.95, y: -0.25, z: 0.7, s: 0.27, p: 7.3, i: 0 },
+        { x: -0.9, y: -0.16, z: 0.9, s: 0.25, p: 8.6, i: 0 },
       ].map((item, index) => {
         const rig = createButterfly(
           three,
@@ -448,6 +451,7 @@ export default function ThreeBloomScene() {
           new three.Vector3(item.x, item.y, item.z),
           item.s,
           item.p,
+          item.i,
         );
         scene.add(rig.group);
         return rig;
@@ -458,7 +462,7 @@ export default function ThreeBloomScene() {
         trigger: '.vera-story',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.7,
+        scrub: 1.8,
         onUpdate: (self) => {
           targetProgress = self.progress;
         },
@@ -545,6 +549,7 @@ export default function ThreeBloomScene() {
 
         const butterflyReveal = smoothstep(0.26, 0.92, progress);
         butterflyRigs.forEach((rig) => {
+          const presence = Math.max(rig.initialPresence, butterflyReveal);
           const time = frame * rig.speed + rig.phase;
           rig.group.position.set(
             rig.base.x + Math.sin(time * 1.2) * rig.radiusX,
@@ -553,13 +558,13 @@ export default function ThreeBloomScene() {
           );
           rig.group.rotation.z = Math.sin(time * 1.3) * 0.22;
           rig.group.rotation.y = Math.sin(time * 0.9) * 0.36;
-          rig.group.scale.setScalar(rig.size * lerp(0.55, 1, butterflyReveal));
+          rig.group.scale.setScalar(rig.size * lerp(0.72, 1, presence));
 
           const flap = 0.72 + Math.sin(time * 12) * 0.48;
           rig.leftWing.rotation.y = flap;
           rig.rightWing.rotation.y = -flap;
-          rig.material.opacity = lerp(0, 0.86, butterflyReveal);
-          rig.bodyMaterial.opacity = lerp(0, 0.58, butterflyReveal);
+          rig.material.opacity = lerp(0, 0.86, presence);
+          rig.bodyMaterial.opacity = lerp(0, 0.58, presence);
         });
 
         renderer.render(scene, camera);
