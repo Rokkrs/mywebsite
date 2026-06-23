@@ -7,7 +7,7 @@ import StoryText from './StoryText';
 import SunReveal from './SunReveal';
 
 const START_TRACK = '/audio/songforStart.mp3';
-const SUN_TRACK = '/audio/songforSun.mp3';
+const SUN_TRACK = '/audio/vera-sun-happy-piano.mp3';
 const SUN_TRACK_PROGRESS = 0.999;
 
 export default function VeraStoryClient() {
