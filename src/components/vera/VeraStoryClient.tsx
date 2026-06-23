@@ -173,6 +173,14 @@ export default function VeraStoryClient() {
         }}
       />
       <section className="story-stage">
+        <div className="cold-sky" aria-hidden="true">
+          <span className="cloud cloud-a" />
+          <span className="cloud cloud-b" />
+          <span className="cloud cloud-c" />
+          <span className="cloud cloud-d" />
+          <span className="cold-mist cold-mist-a" />
+          <span className="cold-mist cold-mist-b" />
+        </div>
         <div className="story-layout">
           <StoryText key={language} scenes={scenes} activeIndex={sceneIndex} />
           <div className="flower-side">

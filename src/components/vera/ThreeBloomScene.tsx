@@ -24,6 +24,21 @@ type BudRig = {
   materials: Three.MeshStandardMaterial[];
 };
 
+type ButterflyRig = {
+  group: Three.Group;
+  leftWing: Three.Mesh;
+  rightWing: Three.Mesh;
+  body: Three.Mesh;
+  material: Three.MeshBasicMaterial;
+  bodyMaterial: Three.MeshBasicMaterial;
+  base: Three.Vector3;
+  radiusX: number;
+  radiusY: number;
+  phase: number;
+  speed: number;
+  size: number;
+};
+
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 const lerp = (from: number, to: number, progress: number) => from + (to - from) * progress;
 const smoothstep = (edge0: number, edge1: number, value: number) => {
@@ -143,6 +158,71 @@ function createGardenFlower(three: typeof Three, color: string, x: number, y: nu
   group.scale.setScalar(0.01);
 
   return { group, materials, offset: Math.abs(x) * 0.05 + Math.abs(z) * 0.04 + scale * 0.08 };
+}
+
+function createButterflyWingGeometry(three: typeof Three) {
+  const shape = new three.Shape();
+  shape.moveTo(0, 0);
+  shape.bezierCurveTo(0.18, 0.18, 0.34, 0.48, 0.12, 0.62);
+  shape.bezierCurveTo(-0.16, 0.78, -0.42, 0.32, 0, 0);
+  return new three.ShapeGeometry(shape, 18);
+}
+
+function createButterfly(
+  three: typeof Three,
+  wingGeometry: Three.ShapeGeometry,
+  bodyGeometry: Three.CapsuleGeometry,
+  color: string,
+  base: Three.Vector3,
+  size: number,
+  phase: number,
+): ButterflyRig {
+  const group = new three.Group();
+  const material = new three.MeshBasicMaterial({
+    color,
+    transparent: true,
+    opacity: 0,
+    side: three.DoubleSide,
+    depthWrite: false,
+  });
+  const bodyMaterial = new three.MeshBasicMaterial({
+    color: '#5c3a2d',
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+  });
+
+  const leftWing = new three.Mesh(wingGeometry, material);
+  leftWing.position.x = -0.025;
+  leftWing.rotation.z = 0.28;
+  leftWing.scale.x = -1;
+
+  const rightWing = new three.Mesh(wingGeometry, material);
+  rightWing.position.x = 0.025;
+  rightWing.rotation.z = -0.28;
+
+  const body = new three.Mesh(bodyGeometry, bodyMaterial);
+  body.rotation.z = Math.PI / 2;
+  body.scale.set(0.42, 0.26, 0.42);
+
+  group.add(leftWing, rightWing, body);
+  group.position.copy(base);
+  group.scale.setScalar(size);
+
+  return {
+    group,
+    leftWing,
+    rightWing,
+    body,
+    material,
+    bodyMaterial,
+    base,
+    radiusX: 0.34 + (phase % 3) * 0.18,
+    radiusY: 0.18 + (phase % 4) * 0.06,
+    phase,
+    speed: 0.014 + (phase % 5) * 0.002,
+    size,
+  };
 }
 
 export default function ThreeBloomScene() {
@@ -346,6 +426,33 @@ export default function ThreeBloomScene() {
       const particles = new three.Points(particleGeometry, particleMaterial);
       scene.add(particles);
 
+      const butterflyWingGeometry = createButterflyWingGeometry(three);
+      const butterflyBodyGeometry = new three.CapsuleGeometry(0.03, 0.16, 4, 8);
+      const butterflyColors = ['#74c7ff', '#5aaeff', '#ffe781', '#ffd84a', '#fffaf0', '#ffffff'];
+      const butterflyRigs = [
+        { x: -1.35, y: 0.62, z: 0.6, s: 0.42, p: 0.5 },
+        { x: 1.55, y: 1.08, z: 0.2, s: 0.34, p: 1.8 },
+        { x: 2.78, y: 1.68, z: -0.5, s: 0.3, p: 2.7 },
+        { x: -0.42, y: 1.58, z: -0.1, s: 0.28, p: 3.5 },
+        { x: 0.82, y: 0.32, z: 0.8, s: 0.36, p: 4.2 },
+        { x: 3.12, y: 0.78, z: -0.2, s: 0.26, p: 5.1 },
+        { x: -2.2, y: 1.18, z: -0.1, s: 0.32, p: 6.4 },
+        { x: 1.95, y: -0.25, z: 0.7, s: 0.27, p: 7.3 },
+        { x: -0.9, y: -0.16, z: 0.9, s: 0.25, p: 8.6 },
+      ].map((item, index) => {
+        const rig = createButterfly(
+          three,
+          butterflyWingGeometry,
+          butterflyBodyGeometry,
+          butterflyColors[index % butterflyColors.length],
+          new three.Vector3(item.x, item.y, item.z),
+          item.s,
+          item.p,
+        );
+        scene.add(rig.group);
+        return rig;
+      });
+
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const trigger = ScrollTrigger.create({
         trigger: '.vera-story',
@@ -436,6 +543,25 @@ export default function ThreeBloomScene() {
         particles.position.y = Math.sin(frame * 0.008) * 0.12;
         particleMaterial.opacity = lerp(0, 0.42, smoothstep(0.36, 0.92, progress));
 
+        const butterflyReveal = smoothstep(0.26, 0.92, progress);
+        butterflyRigs.forEach((rig) => {
+          const time = frame * rig.speed + rig.phase;
+          rig.group.position.set(
+            rig.base.x + Math.sin(time * 1.2) * rig.radiusX,
+            rig.base.y + Math.cos(time * 1.7) * rig.radiusY + Math.sin(time * 0.7) * 0.12,
+            rig.base.z + Math.cos(time) * 0.16,
+          );
+          rig.group.rotation.z = Math.sin(time * 1.3) * 0.22;
+          rig.group.rotation.y = Math.sin(time * 0.9) * 0.36;
+          rig.group.scale.setScalar(rig.size * lerp(0.55, 1, butterflyReveal));
+
+          const flap = 0.72 + Math.sin(time * 12) * 0.48;
+          rig.leftWing.rotation.y = flap;
+          rig.rightWing.rotation.y = -flap;
+          rig.material.opacity = lerp(0, 0.86, butterflyReveal);
+          rig.bodyMaterial.opacity = lerp(0, 0.58, butterflyReveal);
+        });
+
         renderer.render(scene, camera);
         frame = requestAnimationFrame(render);
       };
@@ -465,6 +591,12 @@ export default function ThreeBloomScene() {
         sunGlowMaterial.dispose();
         particleGeometry.dispose();
         particleMaterial.dispose();
+        butterflyWingGeometry.dispose();
+        butterflyBodyGeometry.dispose();
+        butterflyRigs.forEach((rig) => {
+          rig.material.dispose();
+          rig.bodyMaterial.dispose();
+        });
         renderer.domElement.remove();
       };
     });
