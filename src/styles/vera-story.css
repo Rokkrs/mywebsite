@@ -36,7 +36,7 @@ body {
 
 .vera-story {
   position: relative;
-  min-height: 700vh;
+  min-height: 1000vh;
   isolation: isolate;
   background:
     radial-gradient(circle at 20% 20%, rgb(255 33 229 / 0.25), transparent 35%),
@@ -56,7 +56,7 @@ body {
     radial-gradient(ellipse at 34% 70%, rgb(255 79 163 / 0.18), transparent 32%),
     repeating-radial-gradient(ellipse at 50% 50%, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 44px);
   filter: saturate(1.08);
-  animation: story-gradient-drift 14s ease-in-out infinite alternate;
+  animation: story-gradient-drift 24s ease-in-out infinite alternate;
 }
 
 .vera-story::after {
@@ -70,6 +70,146 @@ body {
     radial-gradient(ellipse at 76% 82%, rgb(47 143 91 / 0.2), transparent 26%),
     radial-gradient(ellipse at 16% 84%, rgb(121 179 107 / 0.13), transparent 24%),
     linear-gradient(to top, rgb(47 143 91 / 0.13), transparent 40%);
+}
+
+.story-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1.1rem;
+  overflow: hidden;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at 50% 45%, rgb(255 255 255 / 0.62), transparent 18%),
+    radial-gradient(circle at 42% 52%, rgb(255 79 163 / 0.2), transparent 32%),
+    radial-gradient(circle at 58% 38%, rgb(255 208 47 / 0.22), transparent 30%),
+    linear-gradient(135deg, rgb(255 243 248 / 0.88), rgb(247 216 232 / 0.84));
+  backdrop-filter: blur(18px) saturate(1.18);
+  transition:
+    opacity 900ms ease 1500ms,
+    filter 1400ms ease 980ms,
+    transform 1800ms ease;
+}
+
+.story-intro.is-leaving {
+  opacity: 0;
+  filter: blur(12px);
+  transform: scale(1.12);
+  pointer-events: none;
+}
+
+.intro-play {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(138px, 18vw, 190px);
+  aspect-ratio: 1;
+  border: 1px solid rgb(255 255 255 / 0.72);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 24%, rgb(255 255 255 / 0.82), transparent 20%),
+    linear-gradient(145deg, #ff4fa3, #ff8f70 48%, #ffd02f);
+  box-shadow:
+    0 0 0 14px rgb(255 255 255 / 0.18),
+    0 30px 86px rgb(216 43 129 / 0.28),
+    inset 0 -18px 30px rgb(174 57 94 / 0.18);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  transform: translateZ(0);
+  animation: intro-play-breathe 3.8s ease-in-out infinite;
+}
+
+.intro-play-glow {
+  position: absolute;
+  inset: -28px;
+  border-radius: inherit;
+  background: conic-gradient(from 20deg, transparent, rgb(255 255 255 / 0.56), transparent, rgb(255 208 47 / 0.42), transparent);
+  filter: blur(10px);
+  opacity: 0.78;
+  animation: intro-glow-spin 14s linear infinite;
+}
+
+.intro-play-text {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  font-weight: 950;
+  letter-spacing: 0.18em;
+  text-shadow: 0 8px 20px rgb(88 28 59 / 0.22);
+}
+
+.story-intro p {
+  max-width: min(520px, 86vw);
+  margin: 0;
+  color: rgb(58 23 48 / 0.62);
+  font-family:
+    "Bradley Hand", "Segoe Print", Georgia, serif;
+  font-size: clamp(1rem, 1.7vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  text-wrap: balance;
+  animation: intro-message-in 1100ms ease both;
+}
+
+.story-intro.is-ready p {
+  color: rgb(58 23 48 / 0.72);
+}
+
+.story-intro::after {
+  position: absolute;
+  inset: 50%;
+  width: 20vmin;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.96), rgb(255 208 47 / 0.42) 38%, transparent 70%);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.22);
+}
+
+.story-intro.is-leaving::after {
+  animation: intro-warp-flash 2200ms ease-out both;
+}
+
+.intro-stardust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.intro-stardust span {
+  --angle: calc(var(--star-index) * 31deg);
+  --distance: calc(72px + (var(--star-index) % 7) * 22px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(4px + (var(--star-index) % 3) * 2px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 12px rgb(255 255 255 / 0.9),
+    0 0 26px rgb(255 208 47 / 0.58);
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(0.35);
+  animation: intro-star-drift 4.8s ease-in-out infinite;
+  animation-delay: calc((var(--star-index) % 9) * -0.22s);
+}
+
+.story-intro.is-leaving .intro-stardust span {
+  width: calc(56px + (var(--star-index) % 6) * 18px);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, #fff, rgb(255 208 47 / 0.92));
+  animation-name: intro-star-warp;
+  animation-duration: 2200ms;
+  animation-delay: calc((var(--star-index) % 8) * 72ms);
 }
 
 .story-stage {
@@ -92,7 +232,7 @@ body {
     radial-gradient(ellipse at 30% 18%, rgb(207 228 255 / 0.44), transparent 32%),
     radial-gradient(ellipse at 78% 24%, rgb(235 244 255 / 0.38), transparent 34%),
     linear-gradient(180deg, rgb(217 234 255 / 0.34), transparent 58%);
-  transition: opacity 180ms linear;
+  transition: opacity 720ms linear;
 }
 
 .cloud {
@@ -107,42 +247,48 @@ body {
     radial-gradient(circle at 78% 58%, rgb(231 242 255 / 0.74) 0 20%, transparent 21%);
   filter: blur(0.5px) drop-shadow(0 18px 34px rgb(112 139 173 / 0.1));
   transform: translate3d(0, 0, 0);
-  animation: cloud-drift var(--cloud-speed) ease-in-out infinite alternate;
+  animation:
+    cloud-drift var(--cloud-speed) ease-in-out infinite alternate,
+    cloud-breathe calc(var(--cloud-speed) * 0.74) ease-in-out infinite alternate;
 }
 
 .cloud-a {
   --cloud-width: min(36vw, 430px);
   --cloud-height: 150px;
-  --cloud-speed: 16s;
+  --cloud-speed: 28s;
   top: 8vh;
   left: -5vw;
+  animation-delay: -2s, -5s;
 }
 
 .cloud-b {
   --cloud-width: min(30vw, 360px);
   --cloud-height: 120px;
-  --cloud-speed: 19s;
+  --cloud-speed: 34s;
   top: 18vh;
   right: 12vw;
   opacity: 0.78;
+  animation-delay: -9s, -3s;
 }
 
 .cloud-c {
   --cloud-width: min(26vw, 300px);
   --cloud-height: 105px;
-  --cloud-speed: 18s;
+  --cloud-speed: 32s;
   top: 34vh;
   left: 44vw;
   opacity: 0.58;
+  animation-delay: -15s, -8s;
 }
 
 .cloud-d {
   --cloud-width: min(22vw, 260px);
   --cloud-height: 92px;
-  --cloud-speed: 21s;
+  --cloud-speed: 38s;
   top: 5vh;
   right: -4vw;
   opacity: 0.64;
+  animation-delay: -6s, -12s;
 }
 
 .cold-mist {
@@ -153,6 +299,7 @@ body {
   border-radius: 50%;
   background: radial-gradient(ellipse, rgb(226 241 255 / 0.42), transparent 64%);
   filter: blur(18px);
+  animation: mist-drift 22s ease-in-out infinite alternate;
 }
 
 .cold-mist-a {
@@ -164,6 +311,7 @@ body {
   bottom: 14vh;
   opacity: 0.54;
   transform: rotate(4deg);
+  animation-delay: -10s;
 }
 
 .story-layout {
@@ -268,7 +416,7 @@ body {
   justify-items: center;
   opacity: 1;
   transform: translateX(0);
-  transition: transform 420ms ease;
+  transition: transform 900ms ease;
   width: min(100%, 48ch);
 }
 
@@ -289,7 +437,7 @@ body {
   text-wrap: balance;
   white-space: nowrap;
   text-align: center;
-  animation: birthday-vibrate 920ms ease-in-out infinite;
+  animation: birthday-vibrate 1600ms ease-in-out infinite;
   text-shadow:
     0 0 18px rgb(255 208 47 / 0.42),
     0 8px 24px rgb(184 15 105 / 0.18);
@@ -394,6 +542,14 @@ body {
   color: #361528;
 }
 
+.language-selector.is-russian-hinting {
+  animation: language-hint-container 5s ease both;
+}
+
+.language-selector.is-russian-hinting button[data-language='ru'] {
+  animation: language-hint-ru 5s ease both;
+}
+
 .language-selector button:focus-visible {
   outline: 2px solid #f2a900;
   outline-offset: 2px;
@@ -472,7 +628,7 @@ body {
   pointer-events: none;
   transform: translate3d(72vw, 42vh, 0);
   translate: -50% -34%;
-  transition: opacity 180ms ease;
+  transition: opacity 420ms ease;
   will-change: transform;
 }
 
@@ -580,7 +736,7 @@ body {
   border-radius: 999px;
   background: linear-gradient(145deg, #d8c09a, #a98f69);
   transform-origin: 50% 14%;
-  animation: cursor-arm-wave 1.22s ease-in-out infinite alternate;
+  animation: cursor-arm-wave 2.1s ease-in-out infinite alternate;
 }
 
 .cursor-arm::after {
@@ -807,7 +963,7 @@ body {
   background: linear-gradient(145deg, #ff9ed0, #ff4fa3);
   filter: drop-shadow(0 8px 14px rgb(216 43 129 / 0.16));
   opacity: 0;
-  animation: floating-petal-drift 5s ease-in-out infinite;
+  animation: floating-petal-drift 8s ease-in-out infinite;
 }
 
 .sun-reveal {
@@ -848,7 +1004,7 @@ body {
 }
 
 .scroll-space {
-  height: 700vh;
+  height: 1000vh;
 }
 
 @keyframes story-gradient-drift {
@@ -871,12 +1027,144 @@ body {
   }
 }
 
+@keyframes intro-play-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.035);
+  }
+}
+
+@keyframes intro-glow-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes intro-star-drift {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(18px) scale(0.35);
+  }
+  28% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)) scale(1);
+  }
+}
+
+@keyframes intro-star-warp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(12px) scaleX(0.18);
+  }
+  18% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(calc(var(--distance) * 6.5)) scaleX(1.25);
+  }
+}
+
+@keyframes intro-warp-flash {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.18);
+  }
+  24% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(9);
+  }
+}
+
+@keyframes intro-message-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
 @keyframes cloud-drift {
   from {
     translate: -1.5vw -0.6vh;
   }
   to {
     translate: 2.6vw 0.9vh;
+  }
+}
+
+@keyframes cloud-breathe {
+  0% {
+    transform: scale(0.985) skewX(-0.8deg);
+    filter: blur(0.4px) drop-shadow(0 18px 34px rgb(112 139 173 / 0.1));
+  }
+  50% {
+    transform: scale(1.035) skewX(0.9deg);
+    filter: blur(1.1px) drop-shadow(0 22px 38px rgb(112 139 173 / 0.13));
+  }
+  100% {
+    transform: scale(1.005) skewX(-0.35deg);
+    filter: blur(0.6px) drop-shadow(0 17px 30px rgb(112 139 173 / 0.1));
+  }
+}
+
+@keyframes mist-drift {
+  from {
+    translate: -5vw -1vh;
+    opacity: 0.54;
+  }
+  to {
+    translate: 6vw 1.4vh;
+    opacity: 0.78;
+  }
+}
+
+@keyframes language-hint-container {
+  0%,
+  100% {
+    box-shadow: 0 12px 28px rgb(149 52 99 / 0.12);
+  }
+  12%,
+  72% {
+    box-shadow:
+      0 12px 28px rgb(149 52 99 / 0.12),
+      0 0 0 8px rgb(255 255 255 / 0.22),
+      0 0 34px rgb(255 79 163 / 0.28);
+  }
+}
+
+@keyframes language-hint-ru {
+  0%,
+  100% {
+    background: rgb(255 255 255 / 0.66);
+    color: #361528;
+    transform: translateY(0) scale(1);
+  }
+  14%,
+  72% {
+    background: linear-gradient(135deg, rgb(255 255 255 / 0.88), rgb(255 208 47 / 0.5));
+    color: #361528;
+    transform: translateY(-1px) scale(1.08);
+    box-shadow:
+      0 0 0 3px rgb(255 255 255 / 0.28),
+      0 10px 22px rgb(216 43 129 / 0.2);
   }
 }
 

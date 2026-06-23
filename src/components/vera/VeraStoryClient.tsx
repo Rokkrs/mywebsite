@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { languageLabels, veraBirthdayTranslations, type VeraLanguage } from '../../i18n/veraBirthday';
 import BloomingFlower from './BloomingFlower';
 import FloatingPetals from './FloatingPetals';
@@ -20,6 +20,10 @@ export default function VeraStoryClient() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [musicNeedsGesture, setMusicNeedsGesture] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(START_TRACK);
+  const [isIntroVisible, setIsIntroVisible] = useState(true);
+  const [isIntroLeaving, setIsIntroLeaving] = useState(false);
+  const [introStep, setIntroStep] = useState<'play' | 'ready'>('play');
+  const [isRussianHintVisible, setIsRussianHintVisible] = useState(false);
   const scenes = veraBirthdayTranslations[language].scenes;
 
   const updateScene = useCallback((progress: number) => {
@@ -53,7 +57,7 @@ export default function VeraStoryClient() {
 
   const playMusic = useCallback(async () => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio) return false;
 
     audio.volume = 0.42;
     audio.muted = false;
@@ -62,9 +66,11 @@ export default function VeraStoryClient() {
       await audio.play();
       setIsMusicPlaying(true);
       setMusicNeedsGesture(false);
+      return true;
     } catch {
       setIsMusicPlaying(false);
       setMusicNeedsGesture(true);
+      return false;
     }
   }, []);
 
@@ -101,27 +107,62 @@ export default function VeraStoryClient() {
     }, 0);
   }, [playMusic, switchTrack]);
 
+  const startExperience = useCallback(async () => {
+    const didPlay = await playMusic();
+    if (!didPlay) return;
+
+    setIntroStep('ready');
+  }, [playMusic]);
+
+  const revealExperience = useCallback(() => {
+    setIsIntroLeaving(true);
+    window.setTimeout(() => {
+      setIsIntroVisible(false);
+    }, 2400);
+  }, []);
+
   useEffect(() => {
-    void playMusic();
+    if (!isIntroVisible) return;
 
-    const unlockMusic = () => {
-      const audio = audioRef.current;
-      if (audio) {
-        audio.muted = false;
-      }
-      void playMusic();
-    };
+    const scrollY = window.scrollY;
+    const previousBodyPosition = document.body.style.position;
+    const previousBodyTop = document.body.style.top;
+    const previousBodyWidth = document.body.style.width;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
 
-    window.addEventListener('pointerdown', unlockMusic, { once: true });
-    window.addEventListener('keydown', unlockMusic, { once: true });
-    window.addEventListener('scroll', unlockMusic, { once: true, passive: true });
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    const preventScroll = (event: Event) => event.preventDefault();
+    window.addEventListener('wheel', preventScroll, { passive: false });
+    window.addEventListener('touchmove', preventScroll, { passive: false });
 
     return () => {
-      window.removeEventListener('pointerdown', unlockMusic);
-      window.removeEventListener('keydown', unlockMusic);
-      window.removeEventListener('scroll', unlockMusic);
+      window.removeEventListener('wheel', preventScroll);
+      window.removeEventListener('touchmove', preventScroll);
+      document.body.style.position = previousBodyPosition;
+      document.body.style.top = previousBodyTop;
+      document.body.style.width = previousBodyWidth;
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      window.scrollTo(0, scrollY);
     };
-  }, [playMusic]);
+  }, [isIntroVisible]);
+
+  useEffect(() => {
+    if (isIntroVisible) return;
+
+    setIsRussianHintVisible(true);
+    const timeout = window.setTimeout(() => {
+      setIsRussianHintVisible(false);
+    }, 5000);
+
+    return () => window.clearTimeout(timeout);
+  }, [isIntroVisible]);
 
   useEffect(() => {
     const cursor = cursorRef.current;
@@ -205,7 +246,7 @@ export default function VeraStoryClient() {
         }
 
         if (introFlower) {
-          const flowerExit = gsap.utils.clamp(0, 1, (progress - 0.08) / 0.18);
+          const flowerExit = gsap.utils.clamp(0, 1, (progress - 0.1) / 0.26);
 
           gsap.set(introFlower, {
             opacity: 1 - flowerExit,
@@ -224,10 +265,10 @@ export default function VeraStoryClient() {
           const isFinalScene = item.closest('.is-birthday') !== null;
           const itemRect = item.getBoundingClientRect();
           const entry = windowRect
-            ? gsap.utils.clamp(0, 1, (readableBottom - itemRect.top) / (readableHeight * 0.34))
+            ? gsap.utils.clamp(0, 1, (readableBottom - itemRect.top) / (readableHeight * 0.48))
             : gsap.utils.clamp(0, 1, (progress - (0.3 + index / total * 0.58)) / 0.1);
           const exit = windowRect && !isFinalScene
-            ? gsap.utils.clamp(0, 1, (readableTop - itemRect.bottom) / (readableHeight * 0.22))
+            ? gsap.utils.clamp(0, 1, (readableTop - itemRect.bottom) / (readableHeight * 0.34))
             : 0;
           const reveal = entry;
           const opacity = reveal * (1 - exit);
@@ -255,7 +296,7 @@ export default function VeraStoryClient() {
           trigger: root,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.8,
+          scrub: 1.8,
           onUpdate: (self) => {
             root.style.setProperty('--scroll-progress', self.progress.toFixed(4));
             updateScene(self.progress);
@@ -268,11 +309,11 @@ export default function VeraStoryClient() {
       });
 
       timeline
-        .to(root, { '--bloom': 0.18, duration: 0.2 }, 0)
-        .to(root, { '--bloom': 0.42, '--garden': 0.18, duration: 0.25 }, 0.2)
-        .to(root, { '--bloom': 0.68, '--garden': 0.34, duration: 0.2 }, 0.45)
-        .to(root, { '--bloom': 0.88, duration: 0.15 }, 0.65)
-        .to(root, { '--bloom': 1, '--sun': 1, '--garden': 1, duration: 0.2 }, 0.8);
+        .to(root, { '--bloom': 0.18, duration: 0.28 }, 0)
+        .to(root, { '--bloom': 0.42, '--garden': 0.18, duration: 0.34 }, 0.24)
+        .to(root, { '--bloom': 0.68, '--garden': 0.34, duration: 0.3 }, 0.5)
+        .to(root, { '--bloom': 0.88, duration: 0.24 }, 0.72)
+        .to(root, { '--bloom': 1, '--sun': 1, '--garden': 1, duration: 0.28 }, 0.92);
 
       timeline.to(floaters, {
         opacity: 0.8,
@@ -280,7 +321,7 @@ export default function VeraStoryClient() {
         y: (index) => Number(floaters[index].dataset.y ?? -120),
         rotate: (index) => Number(floaters[index].dataset.r ?? 120),
         stagger: 0.01,
-        duration: 0.9,
+        duration: 1.25,
       }, 0.35);
 
       requestAnimationFrame(() => {
@@ -302,10 +343,9 @@ export default function VeraStoryClient() {
   }, [language, switchTrack, updateScene]);
 
   return (
-    <main className="vera-story" ref={rootRef}>
+    <main className={`vera-story${isIntroVisible ? ' has-intro' : ''}`} ref={rootRef}>
       <audio
         ref={audioRef}
-        autoPlay
         loop
         playsInline
         preload="auto"
@@ -316,6 +356,31 @@ export default function VeraStoryClient() {
         }}
         src={START_TRACK}
       />
+      {isIntroVisible ? (
+        <div
+          className={`story-intro is-${introStep}${isIntroLeaving ? ' is-leaving' : ''}`}
+          aria-label="Iniciar experiencia"
+        >
+          <div className="intro-stardust" aria-hidden="true">
+            {Array.from({ length: 28 }, (_, index) => (
+              <span key={index} style={{ '--star-index': index } as CSSProperties} />
+            ))}
+          </div>
+          <button
+            className="intro-play"
+            type="button"
+            onClick={introStep === 'play' ? startExperience : revealExperience}
+          >
+            <span className="intro-play-glow" aria-hidden="true" />
+            <span className="intro-play-text">{introStep === 'play' ? 'PLAY' : 'ДА'}</span>
+          </button>
+          <p>
+            {introStep === 'play'
+              ? 'Нажми Play и открой свой подарок'
+              : 'Приготовься, устройся поудобнее, настрой громкость... а теперь :D'}
+          </p>
+        </div>
+      ) : null}
       <div className="music-controls">
         <button
           className="music-toggle"
@@ -353,9 +418,11 @@ export default function VeraStoryClient() {
       <LanguageSelector
         labels={languageLabels}
         language={language}
+        highlightRussian={isRussianHintVisible}
         onChange={(nextLanguage) => {
           setLanguage(nextLanguage);
           setSceneIndex(0);
+          setIsRussianHintVisible(false);
         }}
       />
       <section className="story-stage">
