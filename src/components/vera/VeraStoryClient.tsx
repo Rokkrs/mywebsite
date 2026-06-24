@@ -9,7 +9,7 @@ import SunReveal from './SunReveal';
 
 const START_TRACK = '/audio/songforStart.mp3';
 const SUN_TRACK = '/audio/happyrussian.mp3';
-const ENABLE_BIRTHDAY_LOCK = true;
+const ENABLE_BIRTHDAY_LOCK = false;
 const BIRTHDAY_MONTH_INDEX = 5;
 const BIRTHDAY_DAY = 28;
 const OMSK_UTC_OFFSET_HOURS = 6;
@@ -71,6 +71,7 @@ export default function VeraStoryClient() {
   const [birthdayCountdown, setBirthdayCountdown] = useState<BirthdayCountdown>(() => getBirthdayCountdown());
   const [isVoyageActive, setIsVoyageActive] = useState(false);
   const [isWaterRevealActive, setIsWaterRevealActive] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
   const isBirthdayLocked = ENABLE_BIRTHDAY_LOCK && !birthdayCountdown.isUnlocked;
   const scenes = veraBirthdayTranslations[language].scenes;
 
@@ -172,13 +173,13 @@ export default function VeraStoryClient() {
     setIsVoyageActive(true);
     window.setTimeout(() => {
       setIsWaterRevealActive(true);
-    }, 9000);
+    }, 58000);
     window.setTimeout(() => {
       setIsIntroLeaving(true);
-    }, 10800);
+    }, 60600);
     window.setTimeout(() => {
       setIsIntroVisible(false);
-    }, 12600);
+    }, 63200);
   }, []);
 
   useEffect(() => {
@@ -227,12 +228,33 @@ export default function VeraStoryClient() {
     if (isIntroVisible) return;
 
     setIsRussianHintVisible(true);
+    setShowScrollHint(true);
     const timeout = window.setTimeout(() => {
       setIsRussianHintVisible(false);
     }, 5000);
 
     return () => window.clearTimeout(timeout);
   }, [isIntroVisible]);
+
+  useEffect(() => {
+    if (!showScrollHint) return;
+
+    const hideHint = () => {
+      if (window.scrollY > 8) {
+        setShowScrollHint(false);
+      }
+    };
+
+    window.addEventListener('scroll', hideHint, { passive: true });
+    window.addEventListener('wheel', hideHint, { passive: true });
+    window.addEventListener('touchmove', hideHint, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', hideHint);
+      window.removeEventListener('wheel', hideHint);
+      window.removeEventListener('touchmove', hideHint);
+    };
+  }, [showScrollHint]);
 
   useEffect(() => {
     const cursor = cursorRef.current;
@@ -509,6 +531,10 @@ export default function VeraStoryClient() {
           setIsRussianHintVisible(false);
         }}
       />
+      <div className={`scroll-hint${showScrollHint ? ' is-visible' : ''}`} aria-hidden={!showScrollHint}>
+        <span>Scroll Down!</span>
+        <span className="scroll-hint-arrow" aria-hidden="true" />
+      </div>
       <section className="story-stage">
         <div className="cold-sky" aria-hidden="true">
           <span className="cloud cloud-a" />
