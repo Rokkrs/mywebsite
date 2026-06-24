@@ -9,6 +9,43 @@ import SunReveal from './SunReveal';
 const START_TRACK = '/audio/songforStart.mp3';
 const SUN_TRACK = '/audio/vera-sun-happy-piano.mp3';
 const SUN_TRACK_PROGRESS = 0.999;
+const ENABLE_BIRTHDAY_LOCK = false;
+const BIRTHDAY_MONTH_INDEX = 5;
+const BIRTHDAY_DAY = 28;
+
+type BirthdayCountdown = {
+  isUnlocked: boolean;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
+const getBirthdayCountdown = (): BirthdayCountdown => {
+  const now = new Date();
+  const birthday = new Date(now.getFullYear(), BIRTHDAY_MONTH_INDEX, BIRTHDAY_DAY);
+  const remaining = birthday.getTime() - now.getTime();
+
+  if (remaining <= 0) {
+    return {
+      isUnlocked: true,
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
+  }
+
+  return {
+    isUnlocked: false,
+    days: Math.floor(remaining / 86_400_000),
+    hours: Math.floor((remaining % 86_400_000) / 3_600_000),
+    minutes: Math.floor((remaining % 3_600_000) / 60_000),
+    seconds: Math.floor((remaining % 60_000) / 1000),
+  };
+};
+
+const formatCountdownUnit = (value: number) => value.toString().padStart(2, '0');
 
 export default function VeraStoryClient() {
   const rootRef = useRef<HTMLElement | null>(null);
@@ -24,6 +61,8 @@ export default function VeraStoryClient() {
   const [isIntroLeaving, setIsIntroLeaving] = useState(false);
   const [introStep, setIntroStep] = useState<'play' | 'ready'>('play');
   const [isRussianHintVisible, setIsRussianHintVisible] = useState(false);
+  const [birthdayCountdown, setBirthdayCountdown] = useState<BirthdayCountdown>(() => getBirthdayCountdown());
+  const isBirthdayLocked = ENABLE_BIRTHDAY_LOCK && !birthdayCountdown.isUnlocked;
   const scenes = veraBirthdayTranslations[language].scenes;
 
   const updateScene = useCallback((progress: number) => {
@@ -108,11 +147,13 @@ export default function VeraStoryClient() {
   }, [playMusic, switchTrack]);
 
   const startExperience = useCallback(async () => {
+    if (isBirthdayLocked) return;
+
     const didPlay = await playMusic();
     if (!didPlay) return;
 
     setIntroStep('ready');
-  }, [playMusic]);
+  }, [isBirthdayLocked, playMusic]);
 
   const revealExperience = useCallback(() => {
     setIsIntroLeaving(true);
@@ -152,6 +193,16 @@ export default function VeraStoryClient() {
       window.scrollTo(0, scrollY);
     };
   }, [isIntroVisible]);
+
+  useEffect(() => {
+    if (!ENABLE_BIRTHDAY_LOCK) return;
+
+    const interval = window.setInterval(() => {
+      setBirthdayCountdown(getBirthdayCountdown());
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (isIntroVisible) return;
@@ -369,6 +420,7 @@ export default function VeraStoryClient() {
           <button
             className="intro-play"
             type="button"
+            disabled={introStep === 'play' && isBirthdayLocked}
             onClick={introStep === 'play' ? startExperience : revealExperience}
           >
             <span className="intro-play-glow" aria-hidden="true" />
@@ -379,6 +431,21 @@ export default function VeraStoryClient() {
               ? 'Нажми Play и открой свой подарок'
               : 'Приготовься, устройся поудобнее, настрой громкость... а теперь :D'}
           </p>
+          {introStep === 'play' && isBirthdayLocked ? (
+            <div className="birthday-countdown" aria-live="polite">
+              <div className="come-back-cat">
+                <img src="/vera/come-back-cat.png" alt="" aria-hidden="true" />
+                <span>Вернись позже</span>
+              </div>
+              <span>Можно открыть 28 июня</span>
+              <strong>
+                {birthdayCountdown.days}д{' '}
+                {formatCountdownUnit(birthdayCountdown.hours)}ч{' '}
+                {formatCountdownUnit(birthdayCountdown.minutes)}м{' '}
+                {formatCountdownUnit(birthdayCountdown.seconds)}с
+              </strong>
+            </div>
+          ) : null}
         </div>
       ) : null}
       <div className="music-controls">

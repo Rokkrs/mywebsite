@@ -123,6 +123,17 @@ body {
   animation: intro-play-breathe 3.8s ease-in-out infinite;
 }
 
+.intro-play:disabled {
+  cursor: not-allowed;
+  opacity: 0.74;
+  filter: saturate(0.78);
+  animation-duration: 5.6s;
+}
+
+.intro-play:disabled .intro-play-glow {
+  opacity: 0.36;
+}
+
 .intro-play-glow {
   position: absolute;
   inset: -28px;
@@ -158,6 +169,70 @@ body {
 
 .story-intro.is-ready p {
   color: rgb(58 23 48 / 0.72);
+}
+
+.birthday-countdown {
+  display: grid;
+  gap: 0.52rem;
+  justify-items: center;
+  padding: 0.78rem 1rem;
+  border: 1px solid rgb(255 255 255 / 0.54);
+  border-radius: 20px;
+  background: rgb(255 255 255 / 0.28);
+  color: rgb(58 23 48 / 0.68);
+  box-shadow:
+    0 14px 32px rgb(149 52 99 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.42);
+  backdrop-filter: blur(14px);
+  animation: intro-message-in 1100ms ease both;
+}
+
+.come-back-cat {
+  display: grid;
+  justify-items: center;
+  gap: 0.36rem;
+  margin-bottom: 0.12rem;
+  animation: come-back-cat-float 4.6s ease-in-out infinite;
+}
+
+.come-back-cat img {
+  width: clamp(82px, 11vw, 128px);
+  aspect-ratio: 1;
+  border: 3px solid rgb(255 255 255 / 0.72);
+  border-radius: 28px;
+  object-fit: cover;
+  box-shadow:
+    0 18px 42px rgb(58 23 48 / 0.16),
+    0 0 0 8px rgb(255 255 255 / 0.18);
+}
+
+.come-back-cat span {
+  padding: 0.34rem 0.72rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.62);
+  color: #7c2557;
+  font-family:
+    "Bradley Hand", "Segoe Print", Georgia, serif;
+  font-size: clamp(1rem, 1.55vw, 1.28rem);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  box-shadow: 0 10px 24px rgb(149 52 99 / 0.12);
+}
+
+.birthday-countdown span {
+  font-size: clamp(0.82rem, 1.2vw, 0.95rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.birthday-countdown strong {
+  color: #b80f69;
+  font-size: clamp(1.08rem, 2vw, 1.55rem);
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-shadow: 0 8px 20px rgb(216 43 129 / 0.16);
 }
 
 .story-intro::after {
@@ -1098,6 +1173,16 @@ body {
     opacity: 1;
     filter: blur(0);
     transform: translateY(0);
+  }
+}
+
+@keyframes come-back-cat-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1.4deg);
   }
 }
 
