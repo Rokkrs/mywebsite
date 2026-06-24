@@ -3,15 +3,17 @@ import { languageLabels, veraBirthdayTranslations, type VeraLanguage } from '../
 import BloomingFlower from './BloomingFlower';
 import FloatingPetals from './FloatingPetals';
 import LanguageSelector from './LanguageSelector';
+import LightVoyageTransition from './LightVoyageTransition';
 import StoryText from './StoryText';
 import SunReveal from './SunReveal';
 
 const START_TRACK = '/audio/songforStart.mp3';
-const SUN_TRACK = '/audio/vera-sun-happy-piano.mp3';
-const SUN_TRACK_PROGRESS = 0.999;
-const ENABLE_BIRTHDAY_LOCK = false;
+const SUN_TRACK = '/audio/happyrussian.mp3';
+const ENABLE_BIRTHDAY_LOCK = true;
 const BIRTHDAY_MONTH_INDEX = 5;
 const BIRTHDAY_DAY = 28;
+const OMSK_UTC_OFFSET_HOURS = 6;
+const HOUR_IN_MS = 3_600_000;
 
 type BirthdayCountdown = {
   isUnlocked: boolean;
@@ -23,8 +25,13 @@ type BirthdayCountdown = {
 
 const getBirthdayCountdown = (): BirthdayCountdown => {
   const now = new Date();
-  const birthday = new Date(now.getFullYear(), BIRTHDAY_MONTH_INDEX, BIRTHDAY_DAY);
-  const remaining = birthday.getTime() - now.getTime();
+  const omskNow = new Date(now.getTime() + OMSK_UTC_OFFSET_HOURS * HOUR_IN_MS);
+  const birthdayInOmsk = Date.UTC(
+    omskNow.getUTCFullYear(),
+    BIRTHDAY_MONTH_INDEX,
+    BIRTHDAY_DAY,
+  ) - OMSK_UTC_OFFSET_HOURS * HOUR_IN_MS;
+  const remaining = birthdayInOmsk - now.getTime();
 
   if (remaining <= 0) {
     return {
@@ -62,6 +69,8 @@ export default function VeraStoryClient() {
   const [introStep, setIntroStep] = useState<'play' | 'ready'>('play');
   const [isRussianHintVisible, setIsRussianHintVisible] = useState(false);
   const [birthdayCountdown, setBirthdayCountdown] = useState<BirthdayCountdown>(() => getBirthdayCountdown());
+  const [isVoyageActive, setIsVoyageActive] = useState(false);
+  const [isWaterRevealActive, setIsWaterRevealActive] = useState(false);
   const isBirthdayLocked = ENABLE_BIRTHDAY_LOCK && !birthdayCountdown.isUnlocked;
   const scenes = veraBirthdayTranslations[language].scenes;
 
@@ -70,12 +79,12 @@ export default function VeraStoryClient() {
     setSceneIndex((current) => (current === nextScene ? current : nextScene));
   }, [scenes.length]);
 
-  const switchTrack = useCallback((nextTrack: string) => {
+  const switchTrack = useCallback((nextTrack: string, shouldPlay = false) => {
     const audio = audioRef.current;
     if (!audio || currentTrackRef.current === nextTrack) return;
 
     const wasMuted = audio.muted;
-    const shouldKeepPlaying = !audio.paused;
+    const shouldKeepPlaying = shouldPlay || !audio.paused;
     currentTrackRef.current = nextTrack;
     setCurrentTrack(nextTrack);
     audio.src = nextTrack;
@@ -146,6 +155,10 @@ export default function VeraStoryClient() {
     }, 0);
   }, [playMusic, switchTrack]);
 
+  const playFollowingTrack = useCallback(() => {
+    switchTrack(currentTrackRef.current === START_TRACK ? SUN_TRACK : START_TRACK, true);
+  }, [switchTrack]);
+
   const startExperience = useCallback(async () => {
     if (isBirthdayLocked) return;
 
@@ -156,10 +169,16 @@ export default function VeraStoryClient() {
   }, [isBirthdayLocked, playMusic]);
 
   const revealExperience = useCallback(() => {
-    setIsIntroLeaving(true);
+    setIsVoyageActive(true);
+    window.setTimeout(() => {
+      setIsWaterRevealActive(true);
+    }, 9000);
+    window.setTimeout(() => {
+      setIsIntroLeaving(true);
+    }, 10800);
     window.setTimeout(() => {
       setIsIntroVisible(false);
-    }, 2400);
+    }, 12600);
   }, []);
 
   useEffect(() => {
@@ -352,9 +371,6 @@ export default function VeraStoryClient() {
             root.style.setProperty('--scroll-progress', self.progress.toFixed(4));
             updateScene(self.progress);
             updatePoemItems(self.progress);
-            if (self.progress >= SUN_TRACK_PROGRESS) {
-              switchTrack(SUN_TRACK);
-            }
           },
         },
       });
@@ -391,15 +407,15 @@ export default function VeraStoryClient() {
       isMounted = false;
       cleanup?.();
     };
-  }, [language, switchTrack, updateScene]);
+  }, [language, updateScene]);
 
   return (
     <main className={`vera-story${isIntroVisible ? ' has-intro' : ''}`} ref={rootRef}>
       <audio
         ref={audioRef}
-        loop
         playsInline
         preload="auto"
+        onEnded={playFollowingTrack}
         onPause={() => setIsMusicPlaying(false)}
         onPlay={() => {
           setIsMusicPlaying(true);
@@ -409,9 +425,10 @@ export default function VeraStoryClient() {
       />
       {isIntroVisible ? (
         <div
-          className={`story-intro is-${introStep}${isIntroLeaving ? ' is-leaving' : ''}`}
+          className={`story-intro is-${introStep}${isVoyageActive ? ' is-voyage' : ''}${isIntroLeaving ? ' is-leaving' : ''}`}
           aria-label="Iniciar experiencia"
         >
+          <LightVoyageTransition active={isVoyageActive} water={isWaterRevealActive} />
           <div className="intro-stardust" aria-hidden="true">
             {Array.from({ length: 28 }, (_, index) => (
               <span key={index} style={{ '--star-index': index } as CSSProperties} />
@@ -437,7 +454,7 @@ export default function VeraStoryClient() {
                 <img src="/vera/come-back-cat.png" alt="" aria-hidden="true" />
                 <span>Вернись позже</span>
               </div>
-              <span>Можно открыть 28 июня</span>
+              <span>Можно открыть 28 июня по Омску</span>
               <strong>
                 {birthdayCountdown.days}д{' '}
                 {formatCountdownUnit(birthdayCountdown.hours)}ч{' '}
