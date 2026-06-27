@@ -12,17 +12,10 @@ const ASTRO_COUNT = 7;
 const MEMORY_IMAGES = [
   { src: '/vera/memories/16.jpg', className: 'is-featured', position: '50% 59%' },
   { src: '/vera/memories/1.jpg', className: 'is-giant', position: '50% 44%' },
-  { src: '/vera/memories/2.jpg', position: '50% 46%' },
-  { src: '/vera/memories/3.jpg', position: '50% 48%' },
-  { src: '/vera/memories/4.jpg', position: '50% 48%' },
   { src: '/vera/memories/5.jpg', className: 'is-soft-shrink', position: '50% 58%' },
-  { src: '/vera/memories/6.jpg', position: '50% 52%' },
-  { src: '/vera/memories/7.jpg', position: '50% 58%' },
   { src: '/vera/memories/8.jpg', className: 'is-titanic', position: '50% 58%' },
   { src: '/vera/memories/9.jpg', className: 'is-giant', position: '50% 58%' },
   { src: '/vera/memories/10.jpg', className: 'is-emotional', position: '50% 55%' },
-  { src: '/vera/memories/11.jpg', position: '50% 54%' },
-  { src: '/vera/memories/12.jpg', position: '50% 58%' },
   { src: '/vera/memories/14.jpg', className: 'is-playful', position: '50% 49%' },
   { src: '/vera/memories/15.jpg', className: 'is-beautiful', position: '50% 52%' },
 ];

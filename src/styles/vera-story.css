@@ -467,7 +467,7 @@ body {
 }
 
 .light-voyage.is-active .light-voyage-message {
-  animation: voyage-message-flyby 7200ms cubic-bezier(0.12, 0.82, 0.24, 1) 47500ms both;
+  animation: voyage-message-flyby 6200ms cubic-bezier(0.12, 0.82, 0.24, 1) 30500ms both;
 }
 
 .light-voyage.is-water .light-voyage-message {
@@ -803,6 +803,134 @@ body {
   animation-delay: -10s;
 }
 
+.garden-vines {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 700ms linear;
+}
+
+.garden-branch {
+  position: absolute;
+  z-index: 5;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.garden-branch {
+  width: clamp(360px, 58vw, 840px);
+  opacity: calc(0.62 + var(--garden) * 0.32);
+}
+
+.garden-branch-top {
+  top: calc(-2vh + var(--garden) * 2vh);
+  left: -8vw;
+  width: clamp(430px, 70vw, 980px);
+  transform:
+    rotate(-6deg)
+    scale(calc(0.84 + var(--garden) * 0.18));
+}
+
+.garden-branch-topMirror {
+  top: calc(2vh + var(--garden) * 3vh);
+  right: calc(-10vw - var(--bloom) * 16vw);
+  width: clamp(400px, 66vw, 940px);
+  opacity: calc(0.58 + var(--garden) * 0.2 - var(--bloom) * 0.32);
+  transform:
+    scaleX(-1)
+    rotate(-5deg)
+    scale(calc(0.78 + var(--garden) * 0.14 - var(--bloom) * 0.08));
+}
+
+.garden-branch-topCenter {
+  top: calc(9vh - var(--garden) * 2vh);
+  left: 50%;
+  width: clamp(380px, 58vw, 820px);
+  opacity: calc(0.28 + var(--garden) * 0.36);
+  transform:
+    translateX(-50%)
+    rotate(4deg)
+    scale(calc(0.66 + var(--garden) * 0.2));
+}
+
+.garden-branch-left {
+  left: -24vw;
+  top: calc(38vh - var(--garden) * 10vh);
+  transform:
+    rotate(68deg)
+    scale(calc(0.72 + var(--garden) * 0.26));
+}
+
+.garden-branch-right {
+  right: calc(-24vw - var(--bloom) * 20vw);
+  top: calc(34vh - var(--garden) * 8vh + var(--bloom) * 6vh);
+  opacity: calc(0.58 + var(--garden) * 0.18 - var(--bloom) * 0.38);
+  transform:
+    scaleX(-1)
+    rotate(64deg)
+    scale(calc(0.72 + var(--garden) * 0.18 - var(--bloom) * 0.1));
+}
+
+.garden-branch-bottom {
+  right: calc(-8vw - var(--bloom) * 18vw);
+  bottom: calc(1vh + var(--garden) * 6vh - var(--bloom) * 3vh);
+  width: clamp(420px, 68vw, 980px);
+  opacity: calc(0.58 + var(--garden) * 0.22 - var(--bloom) * 0.34);
+  transform:
+    rotate(-8deg)
+    scale(calc(0.78 + var(--garden) * 0.18 - var(--bloom) * 0.1));
+}
+
+.garden-branch-bottomMirror {
+  left: -16vw;
+  bottom: calc(-2vh + var(--garden) * 10vh);
+  width: clamp(420px, 64vw, 920px);
+  transform:
+    scaleX(-1)
+    rotate(-10deg)
+    scale(calc(0.74 + var(--garden) * 0.28));
+}
+
+.garden-branch-middle {
+  left: 38%;
+  top: calc(56vh - var(--garden) * 11vh);
+  width: clamp(360px, 52vw, 760px);
+  opacity: calc(0.22 + var(--garden) * 0.42);
+  transform:
+    translateX(-50%)
+    rotate(9deg)
+    scale(calc(0.66 + var(--garden) * 0.24));
+}
+
+.garden-branch-middleMirror {
+  right: calc(-20vw - var(--bloom) * 24vw);
+  top: calc(58vh - var(--garden) * 12vh + var(--bloom) * 8vh);
+  width: clamp(380px, 58vw, 860px);
+  opacity: calc(0.18 + var(--garden) * 0.26 - var(--bloom) * 0.28);
+  transform:
+    scaleX(-1)
+    rotate(18deg)
+    scale(calc(0.62 + var(--garden) * 0.22 - var(--bloom) * 0.12));
+}
+
+.garden-branch-lowCenter {
+  left: 50%;
+  bottom: calc(-8vh + var(--garden) * 18vh);
+  width: clamp(460px, 76vw, 1120px);
+  opacity: calc(0.34 + var(--garden) * 0.5);
+  transform:
+    translateX(-50%)
+    rotate(-2deg)
+    scale(calc(0.72 + var(--garden) * 0.28));
+}
+
 .story-layout {
   position: relative;
   display: grid;
@@ -817,7 +945,7 @@ body {
 
 .story-text {
   position: relative;
-  z-index: 6;
+  z-index: 8;
   width: min(650px, 100%);
 }
 
@@ -883,6 +1011,8 @@ body {
 }
 
 .papyrus-scroll {
+  position: relative;
+  z-index: 3;
   display: grid;
   justify-items: center;
   justify-content: center;
@@ -989,6 +1119,7 @@ body {
 .flower-side {
   position: absolute;
   inset: 0 0 0 29%;
+  z-index: 7;
   display: grid;
   place-items: center;
   min-height: 100vh;
@@ -1564,6 +1695,15 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes papyrus-leaf-breathe {
+  0% {
+    filter: saturate(0.96) brightness(0.98);
+  }
+  100% {
+    filter: saturate(1.12) brightness(1.06);
   }
 }
 

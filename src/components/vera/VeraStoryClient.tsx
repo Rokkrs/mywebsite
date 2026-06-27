@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { languageLabels, veraBirthdayTranslations, type VeraLanguage } from '../../i18n/veraBirthday';
 import BloomingFlower from './BloomingFlower';
 import FloatingPetals from './FloatingPetals';
+import GardenVines from './GardenVines';
 import LanguageSelector from './LanguageSelector';
 import LightVoyageTransition from './LightVoyageTransition';
 import StoryText from './StoryText';
@@ -9,7 +10,7 @@ import SunReveal from './SunReveal';
 
 const START_TRACK = '/audio/songforStart.mp3';
 const SUN_TRACK = '/audio/happyrussian.mp3';
-const ENABLE_BIRTHDAY_LOCK = false;
+const ENABLE_BIRTHDAY_LOCK = false;//
 const BIRTHDAY_MONTH_INDEX = 5;
 const BIRTHDAY_DAY = 28;
 const OMSK_UTC_OFFSET_HOURS = 6;
@@ -163,9 +164,7 @@ export default function VeraStoryClient() {
   const startExperience = useCallback(async () => {
     if (isBirthdayLocked) return;
 
-    const didPlay = await playMusic();
-    if (!didPlay) return;
-
+    await playMusic();
     setIntroStep('ready');
   }, [isBirthdayLocked, playMusic]);
 
@@ -173,13 +172,13 @@ export default function VeraStoryClient() {
     setIsVoyageActive(true);
     window.setTimeout(() => {
       setIsWaterRevealActive(true);
-    }, 58000);
+    }, 39000);
     window.setTimeout(() => {
       setIsIntroLeaving(true);
-    }, 60600);
+    }, 41600);
     window.setTimeout(() => {
       setIsIntroVisible(false);
-    }, 63200);
+    }, 44200);
   }, []);
 
   useEffect(() => {
@@ -544,6 +543,7 @@ export default function VeraStoryClient() {
           <span className="cold-mist cold-mist-a" />
           <span className="cold-mist cold-mist-b" />
         </div>
+        <GardenVines />
         <div className="story-layout">
           <StoryText key={language} scenes={scenes} activeIndex={sceneIndex} />
           <div className="flower-side">
