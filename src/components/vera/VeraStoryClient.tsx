@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { languageLabels, veraBirthdayTranslations, type VeraLanguage } from '../../i18n/veraBirthday';
 import BloomingFlower from './BloomingFlower';
 import FloatingPetals from './FloatingPetals';
+import GardenVines from './GardenVines';
 import LanguageSelector from './LanguageSelector';
 import LightVoyageTransition from './LightVoyageTransition';
 import StoryText from './StoryText';
@@ -71,6 +72,7 @@ export default function VeraStoryClient() {
   const [birthdayCountdown, setBirthdayCountdown] = useState<BirthdayCountdown>(() => getBirthdayCountdown());
   const [isVoyageActive, setIsVoyageActive] = useState(false);
   const [isWaterRevealActive, setIsWaterRevealActive] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
   const isBirthdayLocked = ENABLE_BIRTHDAY_LOCK && !birthdayCountdown.isUnlocked;
   const scenes = veraBirthdayTranslations[language].scenes;
 
@@ -162,9 +164,7 @@ export default function VeraStoryClient() {
   const startExperience = useCallback(async () => {
     if (isBirthdayLocked) return;
 
-    const didPlay = await playMusic();
-    if (!didPlay) return;
-
+    await playMusic();
     setIntroStep('ready');
   }, [isBirthdayLocked, playMusic]);
 
@@ -172,13 +172,13 @@ export default function VeraStoryClient() {
     setIsVoyageActive(true);
     window.setTimeout(() => {
       setIsWaterRevealActive(true);
-    }, 9000);
+    }, 31500);
     window.setTimeout(() => {
       setIsIntroLeaving(true);
-    }, 10800);
+    }, 34100);
     window.setTimeout(() => {
       setIsIntroVisible(false);
-    }, 12600);
+    }, 36700);
   }, []);
 
   useEffect(() => {
@@ -227,12 +227,33 @@ export default function VeraStoryClient() {
     if (isIntroVisible) return;
 
     setIsRussianHintVisible(true);
+    setShowScrollHint(true);
     const timeout = window.setTimeout(() => {
       setIsRussianHintVisible(false);
     }, 5000);
 
     return () => window.clearTimeout(timeout);
   }, [isIntroVisible]);
+
+  useEffect(() => {
+    if (!showScrollHint) return;
+
+    const hideHint = () => {
+      if (window.scrollY > 8) {
+        setShowScrollHint(false);
+      }
+    };
+
+    window.addEventListener('scroll', hideHint, { passive: true });
+    window.addEventListener('wheel', hideHint, { passive: true });
+    window.addEventListener('touchmove', hideHint, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', hideHint);
+      window.removeEventListener('wheel', hideHint);
+      window.removeEventListener('touchmove', hideHint);
+    };
+  }, [showScrollHint]);
 
   useEffect(() => {
     const cursor = cursorRef.current;
@@ -391,12 +412,21 @@ export default function VeraStoryClient() {
         duration: 1.25,
       }, 0.35);
 
-      requestAnimationFrame(() => {
+      const syncScrollState = () => {
         ScrollTrigger.refresh();
         const progress = timeline.scrollTrigger?.progress ?? 0;
         root.style.setProperty('--scroll-progress', progress.toFixed(4));
         updateScene(progress);
         updatePoemItems(progress);
+      };
+
+      requestAnimationFrame(syncScrollState);
+      window.setTimeout(syncScrollState, 250);
+
+      root.querySelectorAll('img').forEach((image) => {
+        if (image.complete) return;
+        image.addEventListener('load', syncScrollState, { once: true });
+        image.addEventListener('error', syncScrollState, { once: true });
       });
       }, root);
 
@@ -509,6 +539,10 @@ export default function VeraStoryClient() {
           setIsRussianHintVisible(false);
         }}
       />
+      <div className={`scroll-hint${showScrollHint ? ' is-visible' : ''}`} aria-hidden={!showScrollHint}>
+        <span>Scroll Down!</span>
+        <span className="scroll-hint-arrow" aria-hidden="true" />
+      </div>
       <section className="story-stage">
         <div className="cold-sky" aria-hidden="true">
           <span className="cloud cloud-a" />
@@ -518,6 +552,7 @@ export default function VeraStoryClient() {
           <span className="cold-mist cold-mist-a" />
           <span className="cold-mist cold-mist-b" />
         </div>
+        <GardenVines />
         <div className="story-layout">
           <StoryText key={language} scenes={scenes} activeIndex={sceneIndex} />
           <div className="flower-side">

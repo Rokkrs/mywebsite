@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import type * as Three from 'three';
 
 type Props = {
@@ -9,6 +9,30 @@ type Props = {
 const STAR_COUNT = 1500;
 const ORB_COUNT = 26;
 const ASTRO_COUNT = 7;
+const MEMORY_IMAGES = [
+  { src: '/vera/memories/16.jpg', className: 'is-featured', position: '50% 59%' },
+  { src: '/vera/memories/1.jpg', className: 'is-giant', position: '50% 44%' },
+  { src: '/vera/memories/5.jpg', className: 'is-soft-shrink', position: '50% 58%' },
+  { src: '/vera/memories/8.jpg', className: 'is-titanic', position: '50% 58%' },
+  { src: '/vera/memories/9.jpg', className: 'is-giant', position: '50% 58%' },
+  { src: '/vera/memories/10.jpg', className: 'is-emotional', position: '50% 55%' },
+  { src: '/vera/memories/14.jpg', className: 'is-playful', position: '50% 49%' },
+  { src: '/vera/memories/15.jpg', className: 'is-beautiful', position: '50% 52%' },
+];
+
+const getMemoryStyle = (index: number, position: string) => {
+  const orbitStart = -150 + index * 58;
+  const orbitMid = orbitStart + 170;
+  const orbitEnd = orbitStart + 340;
+
+  return {
+    '--memory-index': index,
+    '--orbit-start': `${orbitStart}deg`,
+    '--orbit-mid': `${orbitMid}deg`,
+    '--orbit-end': `${orbitEnd}deg`,
+    objectPosition: position,
+  } as CSSProperties;
+};
 
 const randomRange = (min: number, max: number) => min + Math.random() * (max - min);
 
@@ -75,7 +99,7 @@ export default function LightVoyageTransition({ active, water }: Props) {
         colors[index * 3] = color.r;
         colors[index * 3 + 1] = color.g;
         colors[index * 3 + 2] = color.b;
-        speeds[index] = randomRange(3.4, 12.4);
+        speeds[index] = randomRange(1.9, 7.4);
       }
 
       const geometry = new three.BufferGeometry();
@@ -164,10 +188,10 @@ export default function LightVoyageTransition({ active, water }: Props) {
         if (disposed || !renderer) return;
 
         frame += 1;
-        cameraTarget.x += (mouse.x * 14 - cameraTarget.x) * 0.032;
-        cameraTarget.y += (mouse.y * 8 - cameraTarget.y) * 0.032;
-        camera.position.x += (cameraTarget.x - camera.position.x) * 0.03;
-        camera.position.y += (cameraTarget.y - camera.position.y) * 0.03;
+        cameraTarget.x += (mouse.x * 12 - cameraTarget.x) * 0.026;
+        cameraTarget.y += (mouse.y * 7 - cameraTarget.y) * 0.026;
+        camera.position.x += (cameraTarget.x - camera.position.x) * 0.024;
+        camera.position.y += (cameraTarget.y - camera.position.y) * 0.024;
         camera.rotation.z = -camera.position.x * 0.006;
         camera.lookAt(camera.position.x * 0.28, camera.position.y * 0.22, -260);
 
@@ -175,7 +199,7 @@ export default function LightVoyageTransition({ active, water }: Props) {
           const offset = index * 3;
           positions[offset] += mouse.x * 0.018 * speeds[index];
           positions[offset + 1] += mouse.y * 0.012 * speeds[index];
-          positions[offset + 2] += speeds[index] * 1.65;
+          positions[offset + 2] += speeds[index] * 1.05;
 
           if (positions[offset + 2] > 44) {
             positions[offset] = randomRange(-120, 120) - mouse.x * 18;
@@ -189,7 +213,7 @@ export default function LightVoyageTransition({ active, water }: Props) {
         orbs.forEach((orb, index) => {
           const speed = Number(orb.userData.speed);
           const phase = Number(orb.userData.phase);
-          orb.position.z += speed * 1.9;
+          orb.position.z += speed * 1.05;
           orb.position.x += Math.sin(frame * 0.012 + phase) * 0.012;
           orb.position.y += Math.cos(frame * 0.01 + phase) * 0.01;
           orb.scale.setScalar(orb.scale.x + Math.sin(frame * 0.02 + index) * 0.0008);
@@ -202,7 +226,7 @@ export default function LightVoyageTransition({ active, water }: Props) {
         astros.forEach((astro, index) => {
           const speed = Number(astro.userData.speed);
           const phase = Number(astro.userData.phase);
-          astro.position.z += speed * 1.6;
+          astro.position.z += speed * 0.92;
           astro.position.x += Math.sin(frame * 0.005 + phase) * 0.01;
           astro.position.y += Math.cos(frame * 0.004 + phase) * 0.008;
           astro.rotation.y += 0.003 + index * 0.0002;
@@ -249,7 +273,21 @@ export default function LightVoyageTransition({ active, water }: Props) {
 
   return (
     <div className={`light-voyage${active ? ' is-active' : ''}${water ? ' is-water' : ''}`} ref={mountRef}>
-      <div className="light-voyage-message" aria-hidden="true">feliz día :)</div>
+      <div className="light-voyage-memories" aria-hidden="true">
+        {MEMORY_IMAGES.map((memory, index) => (
+          <img
+            alt=""
+            className={`light-voyage-memory ${memory.className ?? ''}`}
+            key={memory.src}
+            src={memory.src}
+            style={getMemoryStyle(index, memory.position)}
+          />
+        ))}
+      </div>
+      <div className="light-voyage-message" aria-hidden="true">
+        <span>Feliz día Vera</span>
+        <span className="light-voyage-smile">:)</span>
+      </div>
       <div className="light-voyage-vignette" aria-hidden="true" />
       <div className="light-voyage-water" aria-hidden="true" />
     </div>
