@@ -10,7 +10,7 @@ import SunReveal from './SunReveal';
 
 const START_TRACK = '/audio/songforStart.mp3';
 const SUN_TRACK = '/audio/happyrussian.mp3';
-const ENABLE_BIRTHDAY_LOCK = false;//
+const ENABLE_BIRTHDAY_LOCK = true;
 const BIRTHDAY_MONTH_INDEX = 5;
 const BIRTHDAY_DAY = 28;
 const OMSK_UTC_OFFSET_HOURS = 6;
