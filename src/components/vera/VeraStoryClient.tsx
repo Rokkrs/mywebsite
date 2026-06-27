@@ -172,13 +172,13 @@ export default function VeraStoryClient() {
     setIsVoyageActive(true);
     window.setTimeout(() => {
       setIsWaterRevealActive(true);
-    }, 39000);
+    }, 31500);
     window.setTimeout(() => {
       setIsIntroLeaving(true);
-    }, 41600);
+    }, 34100);
     window.setTimeout(() => {
       setIsIntroVisible(false);
-    }, 44200);
+    }, 36700);
   }, []);
 
   useEffect(() => {

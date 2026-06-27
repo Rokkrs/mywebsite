@@ -20,6 +20,20 @@ const MEMORY_IMAGES = [
   { src: '/vera/memories/15.jpg', className: 'is-beautiful', position: '50% 52%' },
 ];
 
+const getMemoryStyle = (index: number, position: string) => {
+  const orbitStart = -150 + index * 58;
+  const orbitMid = orbitStart + 170;
+  const orbitEnd = orbitStart + 340;
+
+  return {
+    '--memory-index': index,
+    '--orbit-start': `${orbitStart}deg`,
+    '--orbit-mid': `${orbitMid}deg`,
+    '--orbit-end': `${orbitEnd}deg`,
+    objectPosition: position,
+  } as CSSProperties;
+};
+
 const randomRange = (min: number, max: number) => min + Math.random() * (max - min);
 
 export default function LightVoyageTransition({ active, water }: Props) {
@@ -266,10 +280,7 @@ export default function LightVoyageTransition({ active, water }: Props) {
             className={`light-voyage-memory ${memory.className ?? ''}`}
             key={memory.src}
             src={memory.src}
-            style={{
-              '--memory-index': index,
-              objectPosition: memory.position,
-            } as CSSProperties}
+            style={getMemoryStyle(index, memory.position)}
           />
         ))}
       </div>
