@@ -412,12 +412,21 @@ export default function VeraStoryClient() {
         duration: 1.25,
       }, 0.35);
 
-      requestAnimationFrame(() => {
+      const syncScrollState = () => {
         ScrollTrigger.refresh();
         const progress = timeline.scrollTrigger?.progress ?? 0;
         root.style.setProperty('--scroll-progress', progress.toFixed(4));
         updateScene(progress);
         updatePoemItems(progress);
+      };
+
+      requestAnimationFrame(syncScrollState);
+      window.setTimeout(syncScrollState, 250);
+
+      root.querySelectorAll('img').forEach((image) => {
+        if (image.complete) return;
+        image.addEventListener('load', syncScrollState, { once: true });
+        image.addEventListener('error', syncScrollState, { once: true });
       });
       }, root);
 
